@@ -3,7 +3,6 @@ import { setRequestLocale } from "next-intl/server";
 import { HeroSection } from "@/components/HeroSection";
 import { ServicesGrid } from "@/components/ServicesGrid";
 import { PricesSection } from "@/components/PricesSection";
-import { BookingForm } from "@/components/BookingForm";
 
 export default async function HomePage({
   params,
@@ -23,14 +22,9 @@ export default async function HomePage({
         {/* Services Showcase */}
         <ServicesGrid />
 
-        {/* Transparent Fixed Tariffs & Calculator */}
+        {/* Transparent Fixed Tariffs */}
         <section className="w-full max-w-5xl xl:max-w-6xl mx-auto pt-2 sm:pt-4">
           <PricesSection />
-        </section>
-
-        {/* VIP Booking Request Flow */}
-        <section className="w-full max-w-4xl mx-auto pt-2 sm:pt-4">
-          <BookingForm />
         </section>
       </div>
     </div>

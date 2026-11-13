@@ -6,7 +6,6 @@ import { routing } from "@/i18n/routing";
 import "../globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { FloatingContact } from "@/components/FloatingContact";
 import { BookingModalProvider } from "@/components/BookingModal";
 
 export const viewport: Viewport = {
@@ -92,7 +91,6 @@ export default async function LocaleLayout({
             <main className="flex-1 w-full">
               {children}
             </main>
-            <FloatingContact />
             <Footer />
           </BookingModalProvider>
         </NextIntlClientProvider>

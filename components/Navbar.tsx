@@ -91,6 +91,26 @@ export function Navbar() {
             </button>
           </div>
         </div>
+
+        {/* Mobile Horizontal Sub-Navigation Bar matching Mobile Screenshot */}
+        <div className="flex lg:hidden items-center justify-around px-2 py-2 border-t border-white/[0.08] bg-obsidian/95 overflow-x-auto no-scrollbar">
+          {navItems.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-2 py-1 text-xs transition-all whitespace-nowrap relative ${
+                  active
+                    ? "text-white font-semibold after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-[#DFBA73] after:to-[#C89E50]"
+                    : "text-silver-muted hover:text-white"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </div>
       </header>
 
       {/* Slide-Out Drawer (Accessible via hamburger) */}
