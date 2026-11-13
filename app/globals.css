@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #080A0C;
+  --color-obsidian-soft: #0D1014;
+  --color-graphite: #14171C;
+  --color-graphite-elevated: #1B1F26;
+  --color-hairline: #2E343E;
+  --color-platinum-light: #FFFFFF;
+  --color-platinum-mid: #E4E7EC;
+  --color-platinum-dark: #B8BFC9;
+  --color-silver-muted: #9CA3AF;
+  --color-whatsapp: #25D366;
+}
+
+:root {
+  --background: #080A0C;
+  --foreground: #E4E7EC;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--color-obsidian);
+  color: var(--color-platinum-mid);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Arabic Typography Support */
+[dir="rtl"] {
+  font-family: "Segoe UI", Tahoma, Arial, "Noto Sans Arabic", sans-serif;
+  letter-spacing: normal;
+}
+
+/* Luxury Metallic & Brushed Silver Highlights */
+.bg-silver-gradient {
+  background: linear-gradient(135deg, #FFFFFF 0%, #E4E7EC 35%, #C2C9D4 70%, #9CA3AF 100%);
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #ECC880 0%, #DFBA73 50%, #C59B4B 100%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(180deg, #FFF1D2 0%, #E8CD90 45%, #C59B4B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-silver-metallic {
+  background: linear-gradient(180deg, #FFFFFF 0%, #D8DFE9 50%, #B8BFC9 100%);
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.12), 0 1px 3px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.bg-graphite-glass {
+  background: rgba(20, 23, 28, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.border-hairline-subtle {
+  border-color: rgba(46, 52, 62, 0.7);
+}
+
+.text-silver-gradient {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E4E7EC 60%, #9CA3AF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Safe area for mobile notch / home indicator */
+.safe-area-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0.75rem));
+}
+
+/* Slanted automotive badge with RTL mirror support */
+.clip-diagonal {
+  clip-path: polygon(14px 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+[dir="rtl"] .clip-diagonal {
+  clip-path: polygon(0% 0%, calc(100% - 14px) 0%, 100% 100%, 0% 100%);
+}
+
+/* Prevent iOS auto-zoom on mobile inputs */
+@media screen and (max-width: 640px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080A0C;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2E343E;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4B5563;
+}
