@@ -30,7 +30,13 @@
     "fleet": "Fleet",
     "licensedVIPService": "Licensed VIP Chauffeur Service Zell am See",
     "vipChauffeurWhatsApp": "WhatsApp Chauffeur VIP",
-    "navSection": "Navigation"
+    "navSection": "Navigation",
+    "airportTransfers": "Airport Transfers",
+    "panoramicExcursions": "Panoramic Excursions",
+    "bicycleTransfers": "Bicycle Transfers",
+    "vipChauffeurTaxi": "VIP Chauffeur Taxi",
+    "carRental": "Car Rental",
+    "allServices": "All Services"
   },
   "hero": {
     "badge": "Zell am See, Austria",
@@ -91,6 +97,11 @@
     "kmSectionTitle": "Kilometer Tariffs",
     "kmRates": "Up to 50 km: 3.10 € / km · From 50 km: 2.80 € / km",
     "kmNote": "Price will be confirmed manually.",
+    "kmTierShort": "Up to 50 km",
+    "kmTierShortDesc": "Ideal for short trips",
+    "kmTierLong": "From 50 km",
+    "kmTierLongDesc": "Best value for longer journeys",
+    "kmThresholdLabel": "Threshold",
     "calculatorTitle": "Fare Calculator",
     "calculatorSubtitle": "Calculate an estimated non-binding quote for your desired route.",
     "distanceLabel": "Estimated distance (km)",
@@ -261,5 +272,339 @@
     "certifiedLicense": "Official Chauffeur License",
     "alpineWinterExpertise": "Alpine Winter Driving Expertise",
     "whatsAppService": "WhatsApp Chauffeur Service"
+  },
+  "airportPage": {
+    "metaTitle": "Airport Transfer Salzburg, Munich, Vienna, Innsbruck | First Class Drive",
+    "metaDesc": "VIP chauffeur service & private airport transfers from Salzburg (SZG), Munich (MUC), Vienna (VIE) & Innsbruck to Zell am See, Kaprun and the Austrian Alps. 24/7, fixed rates & Meet and Greet.",
+    "badge": "Airport Transfers",
+    "heroTitleLine1": "Your Airport Transfer.",
+    "heroTitleLine2": "Arrive in Comfort.",
+    "heroSubtitle": "Premium airport transfers from Salzburg, Munich, Vienna & Innsbruck to Zell am See, Kaprun, and across the Alps.",
+    "airportsTitle": "Main Airport Hubs",
+    "airportsSubtitle": "Direct connections to all major gateways in the Alpine region.",
+    "salzburgAirport": "Salzburg Airport",
+    "salzburgCode": "SZG",
+    "salzburgDist": "approx. 75 km / 70 mins",
+    "munichAirport": "Munich Airport",
+    "munichCode": "MUC",
+    "munichDist": "approx. 210 km / 2 hrs 20 mins",
+    "viennaAirport": "Vienna Airport",
+    "viennaCode": "VIE",
+    "viennaDist": "approx. 390 km / 4 hrs",
+    "innsbruckAirport": "Innsbruck Airport",
+    "innsbruckCode": "INN",
+    "innsbruckDist": "approx. 145 km / 1 hr 50 mins",
+    "quickBar": {
+      "pickupAirport": "Pickup Airport",
+      "selectAirport": "Please select",
+      "destination": "Destination",
+      "selectDestination": "Please select",
+      "date": "Date",
+      "selectDate": "Select date",
+      "time": "Time",
+      "selectTime": "Select time",
+      "passengers": "Passengers",
+      "person": "Passenger",
+      "persons": "Passengers",
+      "cta": "Request Transfer"
+    },
+    "usps": {
+      "flightMonitoring": "Flight Monitoring",
+      "flightMonitoringDesc": "Free real-time flight tracking & schedule adjustment",
+      "meetGreet": "Meet & Greet",
+      "meetGreetDesc": "Personal driver welcome with name badge at arrivals",
+      "fixedPrice": "Fixed Rates",
+      "fixedPriceDesc": "Transparent all-inclusive rates with zero hidden fees",
+      "upTo8": "Up to 8 Passengers",
+      "upTo8Desc": "Spacious cabin for families, ski gear & heavy luggage"
+    },
+    "routes": {
+      "title": "Popular Routes",
+      "subtitle": "Comfortable. Safe. Punctual.",
+      "fromPrice": "from",
+      "r1": "Salzburg → Munich",
+      "r1Price": "220 €",
+      "r2": "Salzburg → Vienna",
+      "r2Price": "240 €",
+      "r3": "Salzburg → Innsbruck",
+      "r3Price": "280 €",
+      "r4": "Munich → Salzburg",
+      "r4Price": "220 €"
+    },
+    "contactBar": {
+      "phone": "+43 660 123 4567",
+      "phoneLabel": "Available 24/7",
+      "email": "info@firstclass-drive.at",
+      "emailLabel": "Quick Response",
+      "location": "Zell am See, Austria",
+      "locationLabel": "Our Region",
+      "cta": "Booking Inquiry"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions About Airport Transfers",
+      "q1": "What happens if my flight is delayed?",
+      "a1": "We monitor your flight in real time using your flight number. Your chauffeur adjusts your pickup time automatically without extra charges.",
+      "q2": "Where do I meet my chauffeur at the airport?",
+      "a2": "Your chauffeur will greet you inside the arrivals terminal holding a personalized name sign and will assist you with all luggage.",
+      "q3": "Are child seats and ski equipment included?",
+      "a3": "Yes! Child seats and booster seats are complimentary on request. Our Mercedes V-Class easily accommodates up to 8 passengers plus full winter ski gear.",
+      "q4": "Are the prices fixed without hidden charges?",
+      "a4": "Yes, our prices are guaranteed fixed rates including highway tolls, parking fees, and taxes with no hidden surcharges."
+    }
+  },
+  "excursionsPage": {
+    "metaTitle": "Panoramic Excursions & Day Tours in Austria | First Class Drive",
+    "metaDesc": "Discover the finest panoramic tours from Zell am See, Kaprun & Salzburg: Grossglockner High Alpine Road, Krimml Waterfalls & Hallstatt with private VIP chauffeur.",
+    "badge": "Panoramic Excursions",
+    "heroTitleLine1": "The Most Beautiful",
+    "heroTitleLine2": "Panoramic Tours",
+    "heroSubtitle": "Experience the breathtaking nature of Austria with First Class Drive – stylish, comfortable, and unforgettable.",
+    "usps": {
+      "comfort": "Luxury Travel Comfort",
+      "guided": "Guided Day Tours",
+      "panoramas": "Unforgettable Panoramas",
+      "reliable": "Safe & Reliable"
+    },
+    "destinationsTitle": "Our Most Popular Excursion Destinations",
+    "grossglockner": {
+      "tag": "Großglockner",
+      "badge": "3,798 m",
+      "title": "Grossglockner High Alpine Road",
+      "desc": "Austria’s highest mountain – an unforgettable alpine adventure on the Grossglockner High Alpine Road.",
+      "fullDesc": "Discover the majestic Grossglockner and the world-famous High Alpine Road. Enjoy sweeping mountain panoramas, alpine flora and fauna, and legendary vista viewpoints in complete luxury.",
+      "cta": "Learn More"
+    },
+    "krimml": {
+      "tag": "Krimml Waterfalls",
+      "badge": "380 m",
+      "title": "Krimml Waterfalls",
+      "desc": "The highest waterfalls in Europe – a breathtaking natural spectacle in the heart of the Alps.",
+      "fullDesc": "Visit the impressive Krimml Waterfalls in the Hohe Tauern National Park. Europe’s highest cascading falls offer a mesmerizing natural spectacle and an invigorating alpine experience for nature lovers.",
+      "cta": "Learn More"
+    },
+    "hallstatt": {
+      "tag": "Hallstatt",
+      "badge": "UNESCO",
+      "title": "Hallstatt – Picturesque UNESCO World Heritage",
+      "desc": "A UNESCO World Heritage gem – explore the fairytale village on Lake Hallstatt.",
+      "fullDesc": "Experience Hallstatt, one of the most picturesque villages in the world. Discover the historic market square, Lake Hallstatt, and the dramatic mountain backdrop during a relaxed private tour.",
+      "cta": "Learn More"
+    },
+    "quickBar": {
+      "startLocation": "Departure",
+      "selectLocation": "Select departure",
+      "date": "Date",
+      "selectDate": "Select date",
+      "passengers": "Passengers",
+      "passengersOption": "1 – 8 Passengers",
+      "cta": "Find Tour"
+    },
+    "chauffeurSection": {
+      "title": "Your Private Chauffeur for Unforgettable Excursions",
+      "subtitle": "Discover Austria’s natural wonders in absolute luxury, without stress, and entirely on your own schedule.",
+      "point1": "Individual pickup in Zell am See, Kaprun, Salzburg, and surroundings",
+      "point2": "Comfortable journeys in premium Mercedes-Benz V-Class VIP vehicles",
+      "point3": "Flexible stay times, spontaneous photo stops, and personalized itineraries",
+      "point4": "Private excursions for couples, families, and groups up to 8 passengers",
+      "point5": "Tailor-made offers customized to your dream route"
+    },
+    "ctaSection": {
+      "title": "Request Your Panoramic Tour Today",
+      "desc": "Plan your private day excursion with First Class Drive. Contact us for a non-binding personalized offer and experience Austria in the utmost comfort.",
+      "btn": "Request Excursion"
+    }
+  },
+  "vipTaxiPage": {
+    "metaTitle": "VIP Chauffeur Taxi in Salzburg & Surroundings | First Class Drive",
+    "metaDesc": "Your exclusive private chauffeur and taxi service in Salzburg: city rides, fine dining restaurant transfers, and alpine ski transfers with First Class Drive.",
+    "badge": "VIP Chauffeur Taxi",
+    "heroTitleLine1": "Your VIP Chauffeur Taxi",
+    "heroTitleLine2": "in Salzburg & Surroundings",
+    "heroMotto": "Exclusive. Reliable. Comfortable.",
+    "heroSubtitle": "Whether city tour, restaurant dinner, or ski transfer – we deliver you in exquisite style.",
+    "usps": {
+      "premium": "Premium Service",
+      "discreet": "Discreet & Reliable",
+      "punctual": "Punctual & Flexible"
+    },
+    "bookingWidget": {
+      "title": "Book VIP Transfer Now",
+      "pickup": "Pickup Location",
+      "pickupPlaceholder": "e.g. Salzburg Old Town",
+      "dropoff": "Destination",
+      "dropoffPlaceholder": "e.g. Airport, Restaurant, Ski Resort",
+      "date": "Date",
+      "datePlaceholder": "Select a date",
+      "time": "Time",
+      "timePlaceholder": "Select a time",
+      "passengers": "Passengers",
+      "passengersOption1": "1 Passenger",
+      "passengersOption2": "2 Passengers",
+      "passengersOption3": "3–4 Passengers",
+      "passengersOption4": "5–8 Passengers (VIP Van)",
+      "cta": "Send Request"
+    },
+    "services": {
+      "city": {
+        "title": "City Rides & VIP Sightseeing",
+        "subtext": "Comfortable rides in Salzburg and surroundings – stylish and direct.",
+        "desc": "Explore Salzburg comfortably with your private chauffeur. Enjoy tailored city tours, flexible pick-up times, and a relaxed journey to the city’s top attractions, hotels, and historic sights.",
+        "cta": "Learn More"
+      },
+      "restaurant": {
+        "title": "Restaurant Transfers",
+        "subtext": "Enjoy culinary highlights – we ensure safe door-to-door transport.",
+        "desc": "Planning an exceptional evening? With our private restaurant transfers in Salzburg, arrive at your venue relaxed and on time. We take care of parking and return you safely whenever you are ready.",
+        "cta": "Learn More"
+      },
+      "ski": {
+        "title": "Ski Transfers",
+        "subtext": "Comfortable transfer directly to the region’s premier ski resorts.",
+        "desc": "Enjoy an effortless start to your ski day. Our ski transfers take you comfortably from Salzburg, Zell am See, or Kaprun to world-class Austrian alpine resorts with generous space for all winter gear.",
+        "cta": "Learn More"
+      }
+    },
+    "whyUs": {
+      "title": "Why First Class Drive?",
+      "subtitle": "Your exclusive chauffeur and taxi service in Salzburg tailored to the highest standards.",
+      "p1": "Premium chauffeur service with personalized comfort",
+      "p2": "Reliable and punctual pickups around the clock",
+      "p3": "Flexible trips and bespoke itinerary routes",
+      "p4": "Comfortable vehicles for individuals and groups up to 8 passengers",
+      "p5": "Local expertise in Salzburg and the Austrian Alps"
+    },
+    "cta": {
+      "title": "Book Your VIP Chauffeur Taxi",
+      "desc": "Whether local VIP ride, restaurant transfer, or ski shuttle – First Class Drive offers a stylish mobility experience. Inquire for your tailored ride today.",
+      "btn": "Inquire Custom Ride"
+    },
+    "signature": {
+      "vipService": "VIP Service",
+      "airportTransfer": "Airport Transfer",
+      "luxuryVehicles": "Luxury Fleet",
+      "service247": "24/7 Service",
+      "localExpertise": "Local Expertise",
+      "motto": "Travel in Style"
+    }
+  },
+  "bikePage": {
+    "metaTitle": "Bicycle & E-Bike Transfers Zell am See, Tauern Cycle Path, Alps | First Class Drive",
+    "metaDesc": "First-class bicycle & e-bike shuttle service in Salzburg & the Austrian Alps: Tauern cycle path return service, Grossglockner bike challenge, Leogang & Saalbach bikeparks. Secure transport for up to 8 bikes.",
+    "badge": "Bicycle & E-Bike Shuttle",
+    "heroTitleLine1": "Bicycle & E-Bike Transfers",
+    "heroTitleLine2": "in the Austrian Alps",
+    "heroSubtitle": "Whether Tauern Cycle Path, Transalp, bike parks or alpine mountain passes – we transport your bikes & e-bikes securely and comfortably.",
+    "usps": {
+      "secureRacks": "Protective Custom Racks & Trailers",
+      "ebikeReady": "E-Bike & Carbon Frame Specialized",
+      "returnService": "Flexible Return & Breakdown Service"
+    },
+    "bookingWidget": {
+      "title": "Request Bike Transfer Now",
+      "pickup": "Pickup Location / Stage End",
+      "pickupPlaceholder": "e.g. Zell am See, Krimml or Passau",
+      "dropoff": "Destination / Starting Point",
+      "dropoffPlaceholder": "e.g. Hotel, Station or Bikepark",
+      "date": "Date",
+      "time": "Time",
+      "bikesCount": "Bicycles & Passengers",
+      "bikesOption1": "1–2 Bikes & Passengers",
+      "bikesOption2": "3–4 Bikes & Passengers",
+      "bikesOption3": "5–6 Bikes & Passengers",
+      "bikesOption4": "Up to 8 Bikes & Passengers (Special Shuttle)",
+      "cta": "Request Bike Transfer"
+    },
+    "services": {
+      "tauernradweg": {
+        "title": "Tauern Cycle Path Shuttle",
+        "subtext": "Return shuttle from your daily destination back to your hotel or starting point (Krimml to Passau).",
+        "desc": "Enjoy the world-famous Tauern Cycle Path without heavy baggage or tiring return journeys. We collect you and your bicycles at any point along the route – from Krimml Waterfalls via Zell am See and Salzburg all the way to Passau.",
+        "cta": "Learn more"
+      },
+      "glockner": {
+        "title": "Grossglockner & Pass Transfers",
+        "subtext": "Luggage delivery uphill or comfortable downhill shuttle after conquering the alpine pass.",
+        "desc": "Conquer the legendary Grossglockner High Alpine Road on road bike or e-bike. We handle your luggage transfer to mountain lodges or pick you and your equipment up safely at the Hochtor pass summit.",
+        "cta": "Learn more"
+      },
+      "bikeparks": {
+        "title": "Bikepark Leogang & Saalbach",
+        "subtext": "Direct shuttle between world-renowned downhill and freeride hotspots.",
+        "desc": "Switch effortlessly between world-class lines at Epic Bikepark Leogang, Saalbach Hinterglemm, and trails on Kitzsteinhorn. Space for up to 8 downhill bikes including full protective gear.",
+        "cta": "Learn more"
+      }
+    },
+    "whyUs": {
+      "title": "Why Bike Transport with First Class Drive?",
+      "subtitle": "Uncompromising care for high-end bicycles, e-bikes, and carbon road bikes.",
+      "p1": "Professional Thule and trailer systems – gentle frame fixation with zero scratches",
+      "p2": "Fully compatible with heavy e-bikes and safe battery transport",
+      "p3": "Combined passenger, bike, and luggage transfers for groups of up to 8 persons",
+      "p4": "Rapid return shuttle during sudden alpine weather changes or mechanical issues",
+      "p5": "Experienced local chauffeurs with in-depth knowledge of all cycle tracks and mountain stages"
+    },
+    "cta": {
+      "title": "Planning your bike or e-bike tour?",
+      "desc": "Whether an individual stage return, luggage transfer, or bikepark shuttle – First Class Drive delivers you and your gear safely and relaxed.",
+      "btn": "Request bike transfer now"
+    },
+    "signature": {
+      "bikeTrailer": "Dedicated Bike Trailer",
+      "ebikeSafety": "E-Bike & Carbon Safe",
+      "passShuttle": "Alpine Pass Shuttle",
+      "service247": "24/7 On-Demand Standby",
+      "localRoutes": "Regional Route Knowledge",
+      "motto": "Ride with Freedom, Travel in Comfort"
+    }
+  },
+  "carRentalPage": {
+    "metaTitle": "Car Rental & Exclusive Vehicle Hire | First Class Drive Zell am See",
+    "metaDesc": "Car rental & exclusive vehicle hire in Zell am See & Salzburg. Rent premium vehicles and Mercedes-Benz V-Class flexibly – with or without chauffeur.",
+    "locationBadge": "Zell am See, Austria",
+    "requestBadge": "NUR AUF ANFRAGE / UPON REQUEST ONLY",
+    "heroTitle": "Car Rental & Exclusive Vehicle Hire",
+    "heroSubtitle": "Rent premium vehicles and Mercedes-Benz V-Class in Zell am See & Salzburg flexibly – with or without chauffeur.",
+    "pills": {
+      "flexible": "Flexible Rental Period",
+      "insurance": "Comprehensive & Winter Package",
+      "delivery": "Hotel & Airport Delivery"
+    },
+    "features": {
+      "selfDriveTitle": "Self-Drive or with Chauffeur",
+      "selfDriveDesc": "Drive luxury vehicles yourself or relax with a private chauffeur.",
+      "periodTitle": "Daily, Weekly & Long-Term Hire",
+      "periodDesc": "Flexible rental duration from single days up to several weeks.",
+      "customTitle": "Tailored Offer on Request",
+      "customDesc": "Customized proposals and individual rental rates."
+    },
+    "form": {
+      "title": "Request Car Rental",
+      "subtitle": "Fast, simple and non-binding.",
+      "step1": "Rental Details",
+      "step2": "Your Information",
+      "step3": "Send Request",
+      "name": "Full Name *",
+      "namePlaceholder": "Full Name *",
+      "email": "Email Address *",
+      "emailPlaceholder": "Email Address *",
+      "phone": "Phone Number *",
+      "phonePlaceholder": "Phone Number *",
+      "pickup": "Pickup / Delivery Address *",
+      "pickupPlaceholder": "Pickup / Delivery Address *",
+      "startDateLabel": "Rental Start",
+      "startDatePlaceholder": "Date & Time *",
+      "endDateLabel": "Rental End",
+      "endDatePlaceholder": "Date & Time *",
+      "notes": "Desired Vehicle / Notes",
+      "notesPlaceholder": "Desired Vehicle / Notes",
+      "submit": "REQUEST CAR RENTAL",
+      "submitting": "Submitting...",
+      "successTitle": "Rental inquiry sent successfully!",
+      "successDesc": "Thank you for your inquiry. We are checking vehicle availability and will send you a bespoke proposal promptly.",
+      "refId": "Reference ID",
+      "whatsappButton": "Confirm via WhatsApp",
+      "anotherRequest": "New Rental Request",
+      "validationError": "Please fill in all required fields (*)."
+    }
   }
 }

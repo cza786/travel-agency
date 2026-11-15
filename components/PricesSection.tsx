@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import {
   Plane,
@@ -177,7 +178,7 @@ export function PricesSection() {
         </div>
       </section>
 
-      {/* 2. Kilometertarife matching Screenshot 2 */}
+      {/* 2. Kilometertarife — Premium single-tile horizontal row with respective background pictures */}
       <section className="space-y-4">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-lg bg-graphite border border-hairline flex items-center justify-center shrink-0">
@@ -188,28 +189,153 @@ export function PricesSection() {
           </h3>
         </div>
 
-        <div className="p-4 sm:p-6 rounded-2xl bg-graphite border border-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-obsidian border border-hairline flex items-center justify-center shrink-0">
-              <MapPin className="w-5 h-5 text-platinum-light" strokeWidth={1.5} />
-            </div>
-            <div>
-              <div className="text-xs sm:text-sm md:text-base font-semibold text-platinum-light">
-                {t("kmRates")}
+        <div
+          onClick={() => openBooking({ pickup: "Zell am See", dropoff: t("calculateTrip") })}
+          className="group relative rounded-2xl bg-graphite border border-hairline overflow-hidden cursor-pointer hover:border-[#DFBA73]/40 transition-all duration-300 hover:shadow-2xl shadow-sm"
+        >
+          <div className="flex items-stretch flex-col sm:flex-row">
+            {/* Column 1: Short trips (< 50 km) — City / Salzburg Background */}
+            <div className="relative flex-1 p-4 sm:p-5 flex items-center gap-3 sm:gap-4 border-b sm:border-b-0 sm:border-r border-hairline/60 overflow-hidden min-h-[96px] sm:min-h-[118px]">
+              {/* Respective Background Image: City / Salzburg luxury sedan */}
+              <div className="absolute inset-0 pointer-events-none select-none">
+                <Image
+                  src="/images/tariffs/col1-city-short.jpg"
+                  alt="City and short trip luxury transfers"
+                  fill
+                  quality={90}
+                  sizes="(max-width: 640px) 100vw, 400px"
+                  className="object-cover object-right opacity-35 group-hover:opacity-45 transition-opacity duration-500"
+                />
+                {/* Soft directional gradient: dark on text side, subtle fade over vehicle */}
+                <div className="absolute inset-0 bg-gradient-to-r rtl:bg-gradient-to-l from-obsidian via-obsidian/80 to-obsidian/30" />
               </div>
-              <div className="text-[11px] sm:text-xs text-silver-muted mt-0.5">
-                {t("kmNote")}
+
+              {/* Foreground Content */}
+              <div className="relative z-10 flex items-center gap-3 sm:gap-4 min-w-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-obsidian/80 backdrop-blur-md border border-[#DFBA73]/30 flex items-center justify-center shrink-0 shadow-md group-hover:border-[#DFBA73]/60 transition-colors">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#DFBA73]" strokeWidth={1.8} />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[10px] sm:text-[11px] text-[#DFBA73] font-bold uppercase tracking-wider mb-0.5">
+                    {t("kmTierShort")}
+                  </div>
+                  <div className="text-base sm:text-lg md:text-xl font-extrabold text-white tracking-tight leading-tight">
+                    3.10 <span className="text-xs sm:text-sm font-semibold text-silver-muted">€ / km</span>
+                  </div>
+                  <div className="text-[10px] sm:text-[11px] text-silver-muted mt-0.5 font-normal">
+                    {t("kmTierShortDesc")}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2: Longer journeys (>= 50 km) — Alpine Mountain Highway Background */}
+            <div className="relative flex-1 p-4 sm:p-5 flex items-center gap-3 sm:gap-4 overflow-hidden min-h-[96px] sm:min-h-[118px]">
+              {/* Respective Background Image: Alpine mountain highway Mercedes SUV */}
+              <div className="absolute inset-0 pointer-events-none select-none">
+                <Image
+                  src="/images/tariffs/col2-alpine-long.jpg"
+                  alt="Alpine mountain highway transfers"
+                  fill
+                  quality={90}
+                  sizes="(max-width: 640px) 100vw, 400px"
+                  className="object-cover object-right opacity-35 group-hover:opacity-45 transition-opacity duration-500"
+                />
+                {/* Soft directional gradient: dark on text side, subtle fade over vehicle */}
+                <div className="absolute inset-0 bg-gradient-to-r rtl:bg-gradient-to-l from-obsidian via-obsidian/80 to-obsidian/30" />
+              </div>
+
+              {/* Foreground Content with soft, muted luxury tones (no sharp neon colors) */}
+              <div className="relative z-10 flex items-center gap-3 sm:gap-4 min-w-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-obsidian/80 backdrop-blur-md border border-white/15 flex items-center justify-center shrink-0 shadow-md group-hover:border-[#DFBA73]/40 transition-colors">
+                  <Route className="w-4 h-4 sm:w-5 sm:h-5 text-platinum-light" strokeWidth={1.8} />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[10px] sm:text-[11px] text-platinum-light font-bold uppercase tracking-wider mb-0.5">
+                    {t("kmTierLong")}
+                  </div>
+                  <div className="text-base sm:text-lg md:text-xl font-extrabold text-white tracking-tight leading-tight">
+                    2.80 <span className="text-xs sm:text-sm font-semibold text-silver-muted">€ / km</span>
+                  </div>
+                  <div className="text-[10px] sm:text-[11px] text-silver-muted mt-0.5 font-normal">
+                    {t("kmTierLongDesc")}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 3: Threshold Board (50 km) — Alpine Road / Horizon Milestone Background */}
+            <div className="relative hidden sm:flex flex-col items-center justify-center px-5 sm:px-7 md:px-9 border-l border-hairline/60 shrink-0 min-w-[130px] sm:min-w-[150px] overflow-hidden">
+              {/* Respective Background Image: Scenic alpine highway curving towards mountains */}
+              <div className="absolute inset-0 pointer-events-none select-none">
+                <Image
+                  src="/images/tariffs/col3-threshold-road.jpg"
+                  alt="50 km distance threshold route"
+                  fill
+                  quality={90}
+                  sizes="200px"
+                  className="object-cover object-center opacity-30 group-hover:opacity-40 transition-opacity duration-500"
+                />
+                {/* Soft gradient overlay for smooth visual depth */}
+                <div className="absolute inset-0 bg-gradient-to-b from-obsidian/85 via-obsidian/70 to-obsidian/90" />
+              </div>
+
+              {/* Foreground Content */}
+              <div className="relative z-10 flex flex-col items-center">
+                <div className="text-[9.5px] sm:text-[10px] text-silver-muted font-semibold uppercase tracking-widest mb-1.5 drop-shadow-sm">
+                  {t("kmThresholdLabel")}
+                </div>
+
+                {/* Road sign style circular board with subtle warm gold border */}
+                <div className="w-16 h-16 sm:w-[70px] sm:h-[70px] rounded-full border-2 border-[#DFBA73]/80 bg-obsidian/90 backdrop-blur-md flex items-center justify-center shadow-[0_4px_16px_rgba(0,0,0,0.6)] group-hover:shadow-[0_0_24px_rgba(223,186,115,0.22)] transition-shadow">
+                  <div className="text-center">
+                    <span className="text-lg sm:text-xl font-black text-white leading-none">50</span>
+                    <div className="text-[9px] sm:text-[10px] font-bold text-[#DFBA73] uppercase tracking-wider -mt-0.5">km</div>
+                  </div>
+                </div>
+
+                <div className="text-[9px] sm:text-[10px] text-silver-muted/80 mt-1.5 text-center leading-tight">
+                  {t("kmNote")}
+                </div>
               </div>
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => openBooking({ pickup: "Zell am See", dropoff: t("calculateTrip") })}
-            className="self-start sm:self-auto px-4 py-2 rounded-xl bg-obsidian hover:bg-graphite-elevated border border-hairline text-platinum-light text-xs font-semibold transition-colors"
-          >
-            {t("calculateTrip")} ➔
-          </button>
+          {/* Mobile: 50 km board + CTA row */}
+          <div className="relative flex sm:hidden items-center justify-between px-4 py-3 border-t border-hairline/60 bg-graphite-elevated/80 overflow-hidden">
+            {/* Background image for mobile footer */}
+            <div className="absolute inset-0 pointer-events-none select-none">
+              <Image
+                src="/images/tariffs/col3-threshold-road.jpg"
+                alt="50 km distance threshold"
+                fill
+                quality={85}
+                sizes="100vw"
+                className="object-cover object-center opacity-20"
+              />
+              <div className="absolute inset-0 bg-obsidian/70" />
+            </div>
+
+            <div className="relative z-10 flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-full border-2 border-[#DFBA73]/80 bg-obsidian/90 flex items-center justify-center shadow-md">
+                <div className="text-center">
+                  <span className="text-xs font-black text-white leading-none">50</span>
+                  <div className="text-[7.5px] font-bold text-[#DFBA73] uppercase -mt-0.5">km</div>
+                </div>
+              </div>
+              <span className="text-[10px] text-silver-muted">{t("kmNote")}</span>
+            </div>
+            <span className="relative z-10 text-[11px] font-bold text-[#DFBA73] flex items-center gap-1">
+              {t("calculateTrip")} ➔
+            </span>
+          </div>
+
+          {/* Desktop: subtle CTA at bottom-right */}
+          <div className="hidden sm:flex items-center justify-end px-5 py-2.5 border-t border-hairline/40 bg-graphite-elevated/40 backdrop-blur-xs">
+            <span className="text-[11px] sm:text-xs font-bold text-[#DFBA73] group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform flex items-center gap-1.5">
+              {t("calculateTrip")} <span className="text-sm">➔</span>
+            </span>
+          </div>
         </div>
       </section>
     </div>

@@ -70,7 +70,7 @@ const languages: LanguageOption[] = [
   { code: "ar", label: "العربية", short: "AR", flag: <FlagAR /> },
 ];
 
-export function LanguageSelector({ variant = "default" }: { variant?: "default" | "compact" | "drawer" }) {
+export function LanguageSelector({ variant = "default" }: { variant?: "default" | "compact" | "drawer" | "text" }) {
   const currentLocale = useLocale() as "de" | "en" | "ar";
   const tCommon = useTranslations("common");
   const router = useRouter();
@@ -94,6 +94,42 @@ export function LanguageSelector({ variant = "default" }: { variant?: "default" 
     setIsOpen(false);
     router.replace(pathname, { locale });
   };
+
+  if (variant === "text" || variant === "compact") {
+    return (
+      <div className="flex items-center gap-1.5 text-xs text-silver-muted font-medium select-none">
+        <button
+          type="button"
+          onClick={() => handleSelect("de")}
+          className={`hover:text-white transition-colors cursor-pointer text-xs ${
+            currentLocale === "de" ? "text-white font-bold" : "text-silver-muted/80"
+          }`}
+        >
+          DE
+        </button>
+        <span className="text-white/25 select-none">|</span>
+        <button
+          type="button"
+          onClick={() => handleSelect("en")}
+          className={`hover:text-white transition-colors cursor-pointer text-xs ${
+            currentLocale === "en" ? "text-white font-bold" : "text-silver-muted/80"
+          }`}
+        >
+          EN
+        </button>
+        <span className="text-white/25 select-none">|</span>
+        <button
+          type="button"
+          onClick={() => handleSelect("ar")}
+          className={`hover:text-white transition-colors cursor-pointer text-xs ${
+            currentLocale === "ar" ? "text-white font-bold" : "text-silver-muted/80"
+          }`}
+        >
+          العربية
+        </button>
+      </div>
+    );
+  }
 
   if (variant === "drawer") {
     return (

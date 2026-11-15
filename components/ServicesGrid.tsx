@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import {
   Plane,
@@ -25,6 +26,7 @@ interface ServiceItem {
   badgeKey?: string;
   defaultPickup?: string;
   defaultDropoff?: string;
+  href: string;
 }
 
 export function ServicesGrid() {
@@ -38,6 +40,7 @@ export function ServicesGrid() {
     {
       id: "airport",
       image: "/images/clean-airport.jpg",
+      href: "/services/airport-transfers",
       icon: <Plane className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" strokeWidth={1.6} />,
       titleKey: "airport.title",
       shortDescKey: "airport.shortDesc",
@@ -48,6 +51,7 @@ export function ServicesGrid() {
     {
       id: "excursions",
       image: "/images/clean-excursions.jpg",
+      href: "/services/panoramic-excursions",
       icon: <Mountain className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" strokeWidth={1.6} />,
       titleKey: "excursions.title",
       shortDescKey: "excursions.shortDesc",
@@ -58,6 +62,7 @@ export function ServicesGrid() {
     {
       id: "bike",
       image: "/images/clean-bikes.jpg",
+      href: "/services/bicycle-transfers",
       icon: <Bike className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" strokeWidth={1.6} />,
       titleKey: "bike.title",
       shortDescKey: "bike.shortDesc",
@@ -68,6 +73,7 @@ export function ServicesGrid() {
     {
       id: "taxi",
       image: "/images/clean-taxi.jpg",
+      href: "/services/vip-chauffeur-taxi",
       icon: <Car className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" strokeWidth={1.6} />,
       titleKey: "taxi.title",
       shortDescKey: "taxi.shortDesc",
@@ -78,6 +84,7 @@ export function ServicesGrid() {
     {
       id: "rental",
       image: "/images/clean-rental.jpg",
+      href: "/services/car-rental",
       icon: <Car className="w-4 h-4 sm:w-5 sm:h-5 text-white shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" strokeWidth={1.6} />,
       titleKey: "rental.title",
       shortDescKey: "rental.shortDesc",
@@ -108,10 +115,10 @@ export function ServicesGrid() {
       <div className="grid grid-cols-2 gap-2.5 sm:gap-4 md:gap-5">
         {/* Cards 1 to 4 */}
         {services.slice(0, 4).map((service) => (
-          <div
+          <Link
             key={service.id}
-            onClick={() => setActiveModal(service)}
-            className="group relative h-[120px] sm:h-[155px] md:h-[185px] lg:h-[210px] xl:h-[225px] rounded-2xl overflow-hidden border border-hairline/80 bg-obsidian-soft cursor-pointer transition-all duration-300 hover:border-zinc-400/50 hover:scale-[1.012] hover:shadow-[0_12px_36px_rgba(0,0,0,0.65)] shadow-md"
+            href={service.href}
+            className="group relative h-[120px] sm:h-[155px] md:h-[185px] lg:h-[210px] xl:h-[225px] rounded-2xl overflow-hidden border border-hairline/80 bg-obsidian-soft cursor-pointer transition-all duration-300 hover:border-zinc-400/50 hover:scale-[1.012] hover:shadow-[0_12px_36px_rgba(0,0,0,0.65)] shadow-md block"
           >
             {/* Photographic Scene */}
             <div className="absolute inset-0">
@@ -148,15 +155,15 @@ export function ServicesGrid() {
                 <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" strokeWidth={1.8} />
               </div>
             </div>
-          </div>
+          </Link>
         ))}
 
         {/* Card 5 (Rental Car - Spanning full 2 columns as VIP Banner) */}
         {services.slice(4).map((service) => (
-          <div
+          <Link
             key={service.id}
-            onClick={() => setActiveModal(service)}
-            className="col-span-2 group relative h-[74px] sm:h-[95px] md:h-[110px] lg:h-[125px] xl:h-[135px] rounded-2xl overflow-hidden border border-hairline/80 bg-obsidian-soft cursor-pointer transition-all duration-300 hover:border-zinc-400/50 hover:scale-[1.006] hover:shadow-[0_12px_36px_rgba(0,0,0,0.65)] shadow-md"
+            href={service.href}
+            className="col-span-2 group relative h-[74px] sm:h-[95px] md:h-[110px] lg:h-[125px] xl:h-[135px] rounded-2xl overflow-hidden border border-hairline/80 bg-obsidian-soft cursor-pointer transition-all duration-300 hover:border-zinc-400/50 hover:scale-[1.006] hover:shadow-[0_12px_36px_rgba(0,0,0,0.65)] shadow-md block"
           >
             {/* Clean Photographic Scene with Mercedes Key on Left */}
             <div className="absolute inset-0">
@@ -204,7 +211,7 @@ export function ServicesGrid() {
                 <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" strokeWidth={1.8} />
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
@@ -265,7 +272,62 @@ export function ServicesGrid() {
               </div>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
+              {activeModal.id === "airport" && (
+                <Link
+                  href="/services/airport-transfers"
+                  onClick={() => setActiveModal(null)}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
+                >
+                  <Plane className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
+                  <span>Flughafen Hub</span>
+                  <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
+                </Link>
+              )}
+              {activeModal.id === "excursions" && (
+                <Link
+                  href="/services/panoramic-excursions"
+                  onClick={() => setActiveModal(null)}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
+                >
+                  <Mountain className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
+                  <span>Panoramatouren Hub</span>
+                  <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
+                </Link>
+              )}
+              {activeModal.id === "bike" && (
+                <Link
+                  href="/services/bicycle-transfers"
+                  onClick={() => setActiveModal(null)}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
+                >
+                  <Bike className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
+                  <span>Biketransfer Hub</span>
+                  <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
+                </Link>
+              )}
+              {activeModal.id === "taxi" && (
+                <Link
+                  href="/services/vip-chauffeur-taxi"
+                  onClick={() => setActiveModal(null)}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
+                >
+                  <Car className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
+                  <span>VIP Chauffeur Hub</span>
+                  <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
+                </Link>
+              )}
+              {activeModal.id === "rental" && (
+                <Link
+                  href="/services/car-rental"
+                  onClick={() => setActiveModal(null)}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
+                >
+                  <Car className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
+                  <span>Mietwagen Hub</span>
+                  <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
+                </Link>
+              )}
               <button
                 type="button"
                 onClick={() => {

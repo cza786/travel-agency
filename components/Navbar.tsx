@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link, usePathname } from "@/i18n/routing";
 import { useTranslations, useLocale } from "next-intl";
-import { Menu, X, Phone, ShieldCheck, Calendar, ChevronRight } from "lucide-react";
+import { Menu, X, Phone, ShieldCheck, Calendar, ChevronRight, ChevronDown } from "lucide-react";
 import { WhatsAppIcon } from "./WhatsAppIcon";
 import { Logo } from "./Logo";
 import { LanguageSelector } from "./LanguageSelector";
@@ -15,9 +15,31 @@ export function Navbar() {
   const pathname = usePathname();
   const locale = useLocale();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [drawerServicesOpen, setDrawerServicesOpen] = useState(false);
   const { openBooking } = useBookingModal();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const navItems = [
+  // Top-level nav items (Services is handled separately with a dropdown)
+  const topNavItems = [
+    { href: "/", label: t("home") },
+    { href: "/prices", label: t("prices") },
+    { href: "/about", label: t("about") },
+    { href: "/contact", label: t("contact") },
+  ];
+
+  // Service sub-pages for the dropdown
+  const serviceSubItems = [
+    { href: "/services/airport-transfers", label: t("airportTransfers") },
+    { href: "/services/panoramic-excursions", label: t("panoramicExcursions") },
+    { href: "/services/bicycle-transfers", label: t("bicycleTransfers") },
+    { href: "/services/vip-chauffeur-taxi", label: t("vipChauffeurTaxi") },
+    { href: "/services/car-rental", label: t("carRental") },
+  ];
+
+  // All items flat for mobile sub-nav bar
+  const mobileNavItems = [
     { href: "/", label: t("home") },
     { href: "/services", label: t("services") },
     { href: "/prices", label: t("prices") },
@@ -29,36 +51,140 @@ export function Navbar() {
     if (href === "/") {
       return pathname === "/" || pathname === "";
     }
+    if (href === "/services") {
+      return pathname === "/services";
+    }
     return pathname.startsWith(href);
+  };
+
+  const isServicesActive = pathname.startsWith("/services");
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setServicesDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Auto-expand drawer services section if on a services page
+  useEffect(() => {
+    if (drawerOpen && isServicesActive) {
+      setDrawerServicesOpen(true);
+    }
+  }, [drawerOpen, isServicesActive]);
+
+  const handleDropdownEnter = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+      dropdownTimeoutRef.current = null;
+    }
+    setServicesDropdownOpen(true);
+  };
+
+  const handleDropdownLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setServicesDropdownOpen(false);
+    }, 150);
   };
 
   return (
     <>
       <header className="sticky top-0 z-40 w-full bg-obsidian/85 backdrop-blur-md border-b border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
         {/* Main Header Bar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-14 sm:h-16 flex items-center justify-between gap-4">
-          {/* Mobile Left: Hamburger Button (Only on mobile/tablet) */}
-          <div className="flex lg:hidden items-center">
-            <button
-              type="button"
-              onClick={() => setDrawerOpen(true)}
-              className="p-2 -ml-2 rounded-lg text-platinum-mid hover:text-white hover:bg-graphite transition-colors focus:outline-none"
-              aria-label="Navigation Menu"
-            >
-              <Menu className="w-6 h-6 text-white" strokeWidth={1.5} />
-            </button>
-          </div>
-
-          {/* Brand Logo (Left on desktop, centered on mobile) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-16 sm:h-18 lg:h-20 flex items-center justify-between gap-4">
+          {/* Brand Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center group py-1">
-              <Logo className="transition-transform group-hover:scale-[1.02]" />
+              <Logo size="navbar" className="transition-transform group-hover:scale-[1.02]" />
             </Link>
           </div>
 
-          {/* Desktop Center: Navigation Links (Matching Screenshot Exactly) */}
+          {/* Desktop Center: Navigation Links */}
           <nav className="hidden lg:flex items-center gap-5 xl:gap-8">
-            {navItems.map((item) => {
+            {/* Home */}
+            <Link
+              href="/"
+              className={`text-xs sm:text-sm tracking-wide transition-all ${
+                isActive("/")
+                  ? "px-4 py-1.5 rounded-full bg-gradient-to-r from-[#DFBA73] via-[#E8CD90] to-[#DFBA73] text-obsidian font-bold shadow-md"
+                  : "text-white/85 hover:text-white font-medium px-1 py-1.5"
+              }`}
+            >
+              {t("home")}
+            </Link>
+
+            {/* Services with Dropdown */}
+            <div
+              ref={dropdownRef}
+              className="relative"
+              onMouseEnter={handleDropdownEnter}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <Link
+                href="/services"
+                className={`inline-flex items-center gap-1 text-xs sm:text-sm tracking-wide transition-all ${
+                  isServicesActive
+                    ? "px-4 py-1.5 rounded-full bg-gradient-to-r from-[#DFBA73] via-[#E8CD90] to-[#DFBA73] text-obsidian font-bold shadow-md"
+                    : "text-white/85 hover:text-white font-medium px-1 py-1.5"
+                }`}
+              >
+                <span>{t("services")}</span>
+                <ChevronDown
+                  className={`w-3 h-3 transition-transform duration-200 ${
+                    servicesDropdownOpen ? "rotate-180" : ""
+                  } ${isServicesActive ? "text-obsidian" : "text-white/60"}`}
+                  strokeWidth={2}
+                />
+              </Link>
+
+              {/* Dropdown Panel */}
+              {servicesDropdownOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
+                  <div className="w-64 rounded-xl bg-graphite-elevated/95 backdrop-blur-xl border border-hairline shadow-2xl overflow-hidden">
+                    {/* Dropdown Header */}
+                    <Link
+                      href="/services"
+                      className="block px-4 py-3 text-xs font-bold text-[#DFBA73] uppercase tracking-wider border-b border-hairline/60 hover:bg-white/[0.04] transition-colors"
+                      onClick={() => setServicesDropdownOpen(false)}
+                    >
+                      {t("allServices")}
+                    </Link>
+
+                    {/* Service Sub-Items */}
+                    {serviceSubItems.map((item) => {
+                      const active = isActive(item.href);
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className={`flex items-center justify-between px-4 py-3 text-sm transition-colors ${
+                            active
+                              ? "bg-white/[0.06] text-white font-semibold border-l-2 border-[#DFBA73]"
+                              : "text-platinum-mid hover:bg-white/[0.04] hover:text-white"
+                          }`}
+                        >
+                          <span>{item.label}</span>
+                          <ChevronRight
+                            className={`w-3.5 h-3.5 rtl:rotate-180 ${
+                              active ? "text-[#DFBA73]" : "text-silver-muted"
+                            }`}
+                            strokeWidth={1.5}
+                          />
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Prices, About, Contact */}
+            {topNavItems.slice(1).map((item) => {
               const active = isActive(item.href);
               return (
                 <Link
@@ -76,9 +202,17 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Right: Language Selector & Desktop Buchungsanfrage Button */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
-            <LanguageSelector />
+          {/* Right: Language Selector, Desktop Buchungsanfrage & Mobile Menu Button */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Mobile inline text language switcher matching mockup */}
+            <div className="sm:hidden">
+              <LanguageSelector variant="text" />
+            </div>
+
+            {/* Desktop / Tablet dropdown language selector */}
+            <div className="hidden sm:block">
+              <LanguageSelector />
+            </div>
 
             <button
               type="button"
@@ -89,13 +223,25 @@ export function Navbar() {
               <span>{tCommon("bookNow")}</span>
               <ChevronRight className="w-3.5 h-3.5 text-obsidian" strokeWidth={2} />
             </button>
+
+            {/* Mobile Right: Hamburger Button */}
+            <div className="flex lg:hidden items-center ml-1">
+              <button
+                type="button"
+                onClick={() => setDrawerOpen(true)}
+                className="p-1.5 rounded-lg text-platinum-mid hover:text-white hover:bg-graphite transition-colors focus:outline-none"
+                aria-label="Navigation Menu"
+              >
+                <Menu className="w-6 h-6 text-white" strokeWidth={1.5} />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile Horizontal Sub-Navigation Bar matching Mobile Screenshot */}
+        {/* Mobile Horizontal Sub-Navigation Bar */}
         <div className="flex lg:hidden items-center justify-around px-2 py-2 border-t border-white/[0.08] bg-obsidian/95 overflow-x-auto no-scrollbar">
-          {navItems.map((item) => {
-            const active = isActive(item.href);
+          {mobileNavItems.map((item) => {
+            const active = item.href === "/services" ? isServicesActive : isActive(item.href);
             return (
               <Link
                 key={item.href}
@@ -139,7 +285,81 @@ export function Navbar() {
 
             {/* Navigation Links */}
             <div className="flex flex-col gap-1 py-6 flex-1">
-              {navItems.map((item) => {
+              {/* Home */}
+              <Link
+                href="/"
+                onClick={() => setDrawerOpen(false)}
+                className={`flex items-center justify-between px-3 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  isActive("/")
+                    ? "bg-graphite-elevated text-platinum-light border-l-2 border-platinum-light font-semibold"
+                    : "text-platinum-dark hover:bg-graphite hover:text-white"
+                }`}
+              >
+                <span>{t("home")}</span>
+                <ChevronRight className="w-4 h-4 text-silver-muted" strokeWidth={1.5} />
+              </Link>
+
+              {/* Services (Collapsible with sub-items) */}
+              <div>
+                <button
+                  type="button"
+                  onClick={() => setDrawerServicesOpen(!drawerServicesOpen)}
+                  className={`w-full flex items-center justify-between px-3 py-3 rounded-lg text-sm font-medium transition-colors ${
+                    isServicesActive
+                      ? "bg-graphite-elevated text-platinum-light border-l-2 border-platinum-light font-semibold"
+                      : "text-platinum-dark hover:bg-graphite hover:text-white"
+                  }`}
+                >
+                  <span>{t("services")}</span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-silver-muted transition-transform duration-200 ${
+                      drawerServicesOpen ? "rotate-180" : ""
+                    }`}
+                    strokeWidth={1.5}
+                  />
+                </button>
+
+                {/* Collapsible sub-items */}
+                {drawerServicesOpen && (
+                  <div className="ml-3 mt-1 flex flex-col gap-0.5 border-l border-hairline/60 pl-3">
+                    {/* All Services link */}
+                    <Link
+                      href="/services"
+                      onClick={() => setDrawerOpen(false)}
+                      className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-colors ${
+                        isActive("/services")
+                          ? "bg-graphite text-[#DFBA73] font-semibold"
+                          : "text-platinum-dark hover:bg-graphite hover:text-white"
+                      }`}
+                    >
+                      <span>{t("allServices")}</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-silver-muted rtl:rotate-180" strokeWidth={1.5} />
+                    </Link>
+
+                    {serviceSubItems.map((item) => {
+                      const active = isActive(item.href);
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setDrawerOpen(false)}
+                          className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-colors ${
+                            active
+                              ? "bg-graphite text-[#DFBA73] font-semibold"
+                              : "text-platinum-dark hover:bg-graphite hover:text-white"
+                          }`}
+                        >
+                          <span>{item.label}</span>
+                          <ChevronRight className="w-3.5 h-3.5 text-silver-muted rtl:rotate-180" strokeWidth={1.5} />
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* Prices, About, Contact */}
+              {topNavItems.slice(1).map((item) => {
                 const active = isActive(item.href);
                 return (
                   <Link

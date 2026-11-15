@@ -30,7 +30,13 @@
     "fleet": "Fuhrpark",
     "licensedVIPService": "Konzessionierter VIP Fahrdienst Zell am See",
     "vipChauffeurWhatsApp": "WhatsApp Chauffeur VIP",
-    "navSection": "Navigation"
+    "navSection": "Navigation",
+    "airportTransfers": "Flughafentransfers",
+    "panoramicExcursions": "Panoramatouren",
+    "bicycleTransfers": "Fahrrad- & Biketransfer",
+    "vipChauffeurTaxi": "VIP Chauffeur Taxi",
+    "carRental": "Mietwagen",
+    "allServices": "Alle Leistungen"
   },
   "hero": {
     "badge": "Zell am See, Österreich",
@@ -91,6 +97,11 @@
     "kmSectionTitle": "Kilometertarife",
     "kmRates": "Bis 50 km: 3,10 € / km · Ab 50 km: 2,80 € / km",
     "kmNote": "Preis wird manuell bestätigt.",
+    "kmTierShort": "Bis 50 km",
+    "kmTierShortDesc": "Ideal für Kurzstrecken",
+    "kmTierLong": "Ab 50 km",
+    "kmTierLongDesc": "Bester Preis für Langstrecken",
+    "kmThresholdLabel": "Grenzwert",
     "calculatorTitle": "Tarif-Rechner",
     "calculatorSubtitle": "Berechnen Sie eine unverbindliche Kostenschätzung für Ihre Route.",
     "distanceLabel": "Geschätzte Distanz (km)",
@@ -261,5 +272,339 @@
     "certifiedLicense": "Geprüfte Chauffeur-Konzession",
     "alpineWinterExpertise": "Alpine Winter-Fahrexpertise",
     "whatsAppService": "WhatsApp Chauffeur Service"
+  },
+  "airportPage": {
+    "metaTitle": "Flughafentransfer Salzburg, München, Wien, Innsbruck | First Class Drive",
+    "metaDesc": "Erstklassiger Chauffeurservice & Flughafentransfers von Salzburg (SZG), München (MUC), Wien (VIE) & Innsbruck nach Zell am See, Kaprun und die Alpen. Pünktlich, Festpreise & Meet & Greet.",
+    "badge": "Airport Transfers",
+    "heroTitleLine1": "Ihr Flughafentransfer.",
+    "heroTitleLine2": "Entspannt ans Ziel.",
+    "heroSubtitle": "Premium Airport Transfers von Salzburg, München, Wien & Innsbruck nach Zell am See, Kaprun und in die Alpen.",
+    "airportsTitle": "Unsere Hauptflughäfen",
+    "airportsSubtitle": "Direkte Verbindungen zu den wichtigsten Drehkreuzen der Alpenregion.",
+    "salzburgAirport": "Salzburg Airport",
+    "salzburgCode": "SZG",
+    "salzburgDist": "ca. 75 km / 70 Min.",
+    "munichAirport": "München Airport",
+    "munichCode": "MUC",
+    "munichDist": "ca. 210 km / 2 Std. 20 Min.",
+    "viennaAirport": "Wien Airport",
+    "viennaCode": "VIE",
+    "viennaDist": "ca. 390 km / 4 Std.",
+    "innsbruckAirport": "Innsbruck Airport",
+    "innsbruckCode": "INN",
+    "innsbruckDist": "ca. 145 km / 1 Std. 50 Min.",
+    "quickBar": {
+      "pickupAirport": "Abholflughafen",
+      "selectAirport": "Bitte wählen",
+      "destination": "Zielort",
+      "selectDestination": "Bitte wählen",
+      "date": "Datum",
+      "selectDate": "Datum wählen",
+      "time": "Uhrzeit",
+      "selectTime": "Uhrzeit wählen",
+      "passengers": "Personen",
+      "person": "Person",
+      "persons": "Personen",
+      "cta": "Transfer anfragen"
+    },
+    "usps": {
+      "flightMonitoring": "Flugüberwachung",
+      "flightMonitoringDesc": "Automatische Anpassung bei Flugverspätungen",
+      "meetGreet": "Meet & Greet",
+      "meetGreetDesc": "Persönlicher Empfang mit Namensschild am Gate",
+      "fixedPrice": "Festpreise",
+      "fixedPriceDesc": "Transparente Pauschalen ohne versteckte Kosten",
+      "upTo8": "Bis 8 Personen",
+      "upTo8Desc": "Viel Platz für Familie, Ski & großes Reisegepäck"
+    },
+    "routes": {
+      "title": "Beliebte Routen",
+      "subtitle": "Komfortabel. Sicher. Pünktlich.",
+      "fromPrice": "ab",
+      "r1": "Salzburg → München",
+      "r1Price": "220 €",
+      "r2": "Salzburg → Wien",
+      "r2Price": "240 €",
+      "r3": "Salzburg → Innsbruck",
+      "r3Price": "280 €",
+      "r4": "München → Salzburg",
+      "r4Price": "220 €"
+    },
+    "contactBar": {
+      "phone": "+43 660 123 4567",
+      "phoneLabel": "24/7 erreichbar",
+      "email": "info@firstclass-drive.at",
+      "emailLabel": "Schnelle Antwort",
+      "location": "Zell am See, Österreich",
+      "locationLabel": "Unsere Region",
+      "cta": "Buchungsanfrage"
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen zum Flughafentransfer",
+      "q1": "Was geschieht, wenn mein Flug Verspätung hat?",
+      "a1": "Wir überwachen Ihren Flugstatus in Echtzeit anhand der Flugnummer. Ihr Chauffeur passt die Abholzeit automatisch kostenlos an, sodass Sie auch bei Verspätung pünktlich in der Ankunftshalle empfangen werden.",
+      "q2": "Wo treffe ich meinen Chauffeur am Flughafen?",
+      "a2": "Ihr Fahrer wartet direkt am Ausgang des Sicherheitsbereichs / in der Ankunftshalle mit einem personalisierten Schild (Name oder Firmenlogo) und hilft Ihnen gerne mit dem Gepäck.",
+      "q3": "Sind Kindersitze und Skigepäck im Preis enthalten?",
+      "a3": "Ja, bitte geben Sie die Anzahl der benötigten Kindersitze oder Babyschalen bei der Anfrage an. Unsere Mercedes V-Klasse bietet reichlich Stauraum für bis zu 8 Passagiere inklusive Ski-Ausrüstung und Koffern.",
+      "q4": "Gibt es feste Pauschalpreise ohne Nacht- oder Wochenendzuschläge?",
+      "a4": "Ja, wir garantieren transparente Festpreise für alle Flughafenstrecken inklusive Mautgebühren und Parkkosten – ohne versteckte Überraschungen."
+    }
+  },
+  "excursionsPage": {
+    "metaTitle": "Panoramafahrten & Ausflüge in Österreich | First Class Drive",
+    "metaDesc": "Erleben Sie die schönsten Panoramatouren ab Zell am See, Kaprun & Salzburg: Großglockner Hochalpenstraße, Krimmler Wasserfälle & Hallstatt mit privatem Chauffeur.",
+    "badge": "Panoramic Excursions",
+    "heroTitleLine1": "Die schönsten",
+    "heroTitleLine2": "Panoramatouren",
+    "heroSubtitle": "Erleben Sie die atemberaubende Natur Österreichs mit First Class Drive – stilvoll, komfortabel und unvergesslich.",
+    "usps": {
+      "comfort": "Luxuriöser Reisekomfort",
+      "guided": "Geführte Ausflüge",
+      "panoramas": "Unvergessliche Panoramen",
+      "reliable": "Sicher & Zuverlässig"
+    },
+    "destinationsTitle": "Unsere beliebtesten Ausflugsziele",
+    "grossglockner": {
+      "tag": "Großglockner",
+      "badge": "3.798 m",
+      "title": "Großglockner Hochalpenstraße",
+      "desc": "Österreichs höchster Berg – ein unvergessliches Naturerlebnis auf der Großglockner Hochalpenstraße.",
+      "fullDesc": "Entdecken Sie den majestätischen Großglockner und die spektakuläre Großglockner Hochalpenstraße. Genießen Sie beeindruckende Bergpanoramen, alpine Natur und einzigartige Aussichtspunkte auf einer exklusiven Fahrt durch die österreichischen Alpen.",
+      "cta": "Mehr erfahren"
+    },
+    "krimml": {
+      "tag": "Krimml Waterfalls",
+      "badge": "380 m",
+      "title": "Krimmler Wasserfälle",
+      "desc": "Die größten Wasserfälle Europas – ein beeindruckendes Naturschauspiel inmitten der Alpen.",
+      "fullDesc": "Besuchen Sie die beeindruckenden Krimmler Wasserfälle im Nationalpark Hohe Tauern. Europas höchste Wasserfälle bieten ein faszinierendes Naturschauspiel und ein besonderes Erlebnis für Naturliebhaber und Familien.",
+      "cta": "Mehr erfahren"
+    },
+    "hallstatt": {
+      "tag": "Hallstatt",
+      "badge": "UNESCO",
+      "title": "Hallstatt – Das malerische UNESCO-Welterbe",
+      "desc": "Ein UNESCO-Weltkulturerbe – entdecken Sie das malerische Dorf am Hallstätter See.",
+      "fullDesc": "Erleben Sie Hallstatt, eines der schönsten Dörfer Österreichs. Entdecken Sie den historischen Ortskern, den Hallstätter See und die einzigartige Bergkulisse bei einer komfortablen privaten Ausflugsfahrt.",
+      "cta": "Mehr erfahren"
+    },
+    "quickBar": {
+      "startLocation": "Startort",
+      "selectLocation": "Startort wählen",
+      "date": "Datum",
+      "selectDate": "Wählen Sie ein Datum",
+      "passengers": "Personen",
+      "passengersOption": "1 – 8 Personen",
+      "cta": "Tour finden"
+    },
+    "chauffeurSection": {
+      "title": "Ihr privater Chauffeur für unvergessliche Ausflüge",
+      "subtitle": "Entdecken Sie Österreichs Naturwunder in absolutem Luxus, ohne Stress und nach Ihrem eigenen Zeitplan.",
+      "point1": "Individuelle Abholung in Zell am See, Kaprun und Umgebung",
+      "point2": "Komfortable Fahrten im Premium-Fahrzeug",
+      "point3": "Flexible Aufenthaltszeiten und persönliche Planung",
+      "point4": "Private Ausflüge für Paare, Familien und Gruppen",
+      "point5": "Individuelle Angebote für Ihre Wunschroute"
+    },
+    "ctaSection": {
+      "title": "Panoramafahrt jetzt anfragen",
+      "desc": "Planen Sie Ihren privaten Tagesausflug mit First Class Drive. Kontaktieren Sie uns für ein individuelles Angebot und entdecken Sie Österreich auf komfortable und exklusive Weise.",
+      "btn": "Panoramafahrt anfragen"
+    }
+  },
+  "vipTaxiPage": {
+    "metaTitle": "VIP Chauffeur Taxi in Salzburg & Umgebung | First Class Drive",
+    "metaDesc": "Ihr exklusiver Chauffeur- und Taxiservice in Salzburg: Stadtfahrten & VIP Rides, Restaurant-Transfers und Ski-Transfers mit First Class Drive.",
+    "badge": "VIP Chauffeur Taxi",
+    "heroTitleLine1": "Ihr VIP Chauffeur Taxi",
+    "heroTitleLine2": "in Salzburg & Umgebung",
+    "heroMotto": "Exklusiv. Zuverlässig. Komfortabel.",
+    "heroSubtitle": "Ob Stadtrundfahrt, Restaurantbesuch oder Ski-Transfer – wir bringen Sie stilvoll an Ihr Ziel.",
+    "usps": {
+      "premium": "Premium Service",
+      "discreet": "Diskret & Zuverlässig",
+      "punctual": "Pünktlich & Flexibel"
+    },
+    "bookingWidget": {
+      "title": "Jetzt VIP Transfer buchen",
+      "pickup": "Abholort",
+      "pickupPlaceholder": "z. B. Salzburg Altstadt",
+      "dropoff": "Zielort",
+      "dropoffPlaceholder": "z. B. Flughafen, Restaurant, Skigebiet",
+      "date": "Datum",
+      "datePlaceholder": "Wählen Sie ein Datum",
+      "time": "Uhrzeit",
+      "timePlaceholder": "Wählen Sie eine Uhrzeit",
+      "passengers": "Personen",
+      "passengersOption1": "1 Person",
+      "passengersOption2": "2 Personen",
+      "passengersOption3": "3–4 Personen",
+      "passengersOption4": "5–8 Personen (VIP Van)",
+      "cta": "Anfrage senden"
+    },
+    "services": {
+      "city": {
+        "title": "Stadtfahrten & VIP Rides",
+        "subtext": "Bequeme Fahrten in Salzburg und Umgebung – stilvoll und direkt.",
+        "desc": "Entdecken Sie Salzburg komfortabel mit Ihrem privaten Chauffeur. Genießen Sie individuelle Stadtrundfahrten, flexible Abholzeiten und eine entspannte Fahrt zu den schönsten Sehenswürdigkeiten, Hotels und beliebten Orten der Stadt.",
+        "cta": "Mehr erfahren"
+      },
+      "restaurant": {
+        "title": "Restaurant Transfers",
+        "subtext": "Genießen Sie kulinarische Highlights – wir bringen Sie sicher hin und zurück.",
+        "desc": "Planen Sie einen besonderen Abend? Mit unseren Restaurant Transfers in Salzburg erreichen Sie Ihr Lieblingsrestaurant bequem und stressfrei. Wir kümmern uns um Ihre Fahrt und holen Sie nach Ihrem Besuch zuverlässig wieder ab.",
+        "cta": "Mehr erfahren"
+      },
+      "ski": {
+        "title": "Ski Transfer",
+        "subtext": "Komfortabler Transfer zu den Top-Skigebieten der Region.",
+        "desc": "Erleben Sie einen entspannten Start in Ihren Skitag. Unsere Ski Transfers bringen Sie komfortabel von Salzburg, Zell am See oder Kaprun zu beliebten Skigebieten der österreichischen Alpen. Ideal für Familien, Paare und Wintersportgruppen.",
+        "cta": "Mehr erfahren"
+      }
+    },
+    "whyUs": {
+      "title": "Warum First Class Drive?",
+      "subtitle": "Ihr exklusiver Chauffeur- und Taxiservice in Salzburg für höchste Ansprüche.",
+      "p1": "Premium Chauffeurservice mit persönlichem Komfort",
+      "p2": "Zuverlässige und pünktliche Abholung",
+      "p3": "Flexible Fahrten und individuelle Routen",
+      "p4": "Komfortable Fahrzeuge für Einzelpersonen und Gruppen (bis 8 Personen)",
+      "p5": "Lokale Expertise in Salzburg und der gesamten Alpenregion"
+    },
+    "cta": {
+      "title": "VIP Chauffeur Taxi jetzt buchen",
+      "desc": "Ob lokale VIP Fahrt, Restaurant Transfer oder Ski Transfer – First Class Drive bietet Ihnen eine komfortable und stilvolle Mobilitätslösung. Fragen Sie jetzt Ihre individuelle Fahrt an.",
+      "btn": "Individuelle Fahrt anfragen"
+    },
+    "signature": {
+      "vipService": "VIP Service",
+      "airportTransfer": "Flughafentransfer",
+      "luxuryVehicles": "Luxusfahrzeuge",
+      "service247": "24/7 Service",
+      "localExpertise": "Lokale Expertise",
+      "motto": "Travel in Style"
+    }
+  },
+  "bikePage": {
+    "metaTitle": "Fahrrad- & Biketransfer Zell am See, Tauernradweg, Alpen | First Class Drive",
+    "metaDesc": "Erstklassiger Fahrrad- & E-Bike Shuttle im Salzburger Land & Alpenregion: Tauernradweg Rückholservice, Großglockner Bike Challenge, Bikeparks Leogang & Saalbach. Sicherer Transport für bis zu 8 Bikes.",
+    "badge": "Fahrrad & E-Bike Shuttle",
+    "heroTitleLine1": "Fahrrad- & E-Bike Transfer",
+    "heroTitleLine2": "in den österreichischen Alpen",
+    "heroSubtitle": "Ob Tauernradweg, Transalp, Bikeparks oder Passüberquerungen – wir transportieren Ihre Bikes & E-Bikes sicher und komfortabel.",
+    "usps": {
+      "secureRacks": "Schonende Spezialträger & Anhänger",
+      "ebikeReady": "E-Bike & Carbonrahmen Spezialisiert",
+      "returnService": "Flexibler Rückhol- & Pannenservice"
+    },
+    "bookingWidget": {
+      "title": "Biketransfer jetzt anfragen",
+      "pickup": "Abholort / Etappenende",
+      "pickupPlaceholder": "z. B. Zell am See, Krimml oder Passau",
+      "dropoff": "Zielort / Startpunkt",
+      "dropoffPlaceholder": "z. B. Hotel, Bahnhof oder Bikepark",
+      "date": "Datum",
+      "time": "Uhrzeit",
+      "bikesCount": "Fahrräder & Personen",
+      "bikesOption1": "1–2 Bikes & Personen",
+      "bikesOption2": "3–4 Bikes & Personen",
+      "bikesOption3": "5–6 Bikes & Personen",
+      "bikesOption4": "Bis zu 8 Bikes & Personen (Spezial-Shuttle)",
+      "cta": "Biketransfer anfragen"
+    },
+    "services": {
+      "tauernradweg": {
+        "title": "Tauernradweg Etappenshuttle",
+        "subtext": "Rückholservice vom Etappenziel zurück zum Hotel oder Startpunkt (Krimml bis Passau).",
+        "desc": "Genießen Sie den beliebten Tauernradweg ohne Gepäcksorgen oder anstrengende Rückfahrt. Wir holen Sie und Ihre Fahrräder an jedem beliebigen Punkt ab – von den Krimmler Wasserfällen über Zell am See und Salzburg bis nach Passau.",
+        "cta": "Mehr erfahren"
+      },
+      "glockner": {
+        "title": "Großglockner & Pass-Transfer",
+        "subtext": "Gepäcktransport nach oben oder bequeme Talfahrt nach der Passüberquerung.",
+        "desc": "Bezwingen Sie die legendäre Großglockner Hochalpenstraße mit Rennrad oder E-Bike. Wir übernehmen den Gepäcktransport zum Berggasthof oder holen Sie und Ihre Ausrüstung nach der Passhöhe am Hochtor sicher ab.",
+        "cta": "Mehr erfahren"
+      },
+      "bikeparks": {
+        "title": "Bikepark Leogang & Saalbach",
+        "subtext": "Direkttransfer zwischen den weltberühmten Downhill- & Freeride-Hotspots.",
+        "desc": "Wechseln Sie mühelos zwischen den erstklassigen Lines im Epic Bikepark Leogang, Saalbach Hinterglemm und den Trails am Kitzsteinhorn. Platz für bis zu 8 Downhill-Bikes inklusive Protektoren und Ausrüstung.",
+        "cta": "Mehr erfahren"
+      }
+    },
+    "whyUs": {
+      "title": "Warum Biketransport mit First Class Drive?",
+      "subtitle": "Höchste Sorgfalt für wertvolle Fahrräder, E-Bikes und Rennräder.",
+      "p1": "Professionelle Thule- & Anhängersysteme – schonende Fixierung ohne Rahmenkratzer",
+      "p2": "Volle E-Bike Eignung mit hoher Traglast und sicherer Akkubeförderung",
+      "p3": "Kombinierter Personen-, Bike- und Gepäcktransport für Gruppen bis 8 Personen",
+      "p4": "Flexibler Rückholservice bei plötzlichem Wetterumschwung oder Pannen in den Pässen",
+      "p5": "Erfahrene lokale Chauffeure mit genauer Kenntnis aller Radwege und Bergetappen"
+    },
+    "cta": {
+      "title": "Planen Sie Ihre Fahrrad- oder E-Bike-Tour?",
+      "desc": "Ob individueller Etappenshuttle, Gepäcktransport oder Bikepark-Transfer – First Class Drive bringt Sie und Ihr Bike entspannt ans Ziel.",
+      "btn": "Biketransfer jetzt unverbindlich anfragen"
+    },
+    "signature": {
+      "bikeTrailer": "Spezial-Bikeanhänger",
+      "ebikeSafety": "E-Bike & Carbon sicher",
+      "passShuttle": "Alpenpass Shuttle",
+      "service247": "24/7 Rufbereitschaft",
+      "localRoutes": "Regionale Streckenkenntnis",
+      "motto": "Ride with Freedom, Travel in Comfort"
+    }
+  },
+  "carRentalPage": {
+    "metaTitle": "Mietwagen & Exklusive Fahrzeugvermietung | First Class Drive Zell am See",
+    "metaDesc": "Mietwagen & Exklusive Fahrzeugvermietung in Zell am See & Salzburg. Premium Fahrzeuge und Mercedes-Benz V-Klasse flexibel mieten – mit oder ohne Chauffeur.",
+    "locationBadge": "Zell am See, Österreich",
+    "requestBadge": "NUR AUF ANFRAGE / UPON REQUEST ONLY",
+    "heroTitle": "Mietwagen & Exklusive Fahrzeugvermietung",
+    "heroSubtitle": "Premium Fahrzeuge und Mercedes-Benz V-Klasse in Zell am See & Salzburg flexibel mieten – mit oder ohne Chauffeur.",
+    "pills": {
+      "flexible": "Flexible Mietdauer",
+      "insurance": "Vollkasko & Winterpaket",
+      "delivery": "Hotel- & Flughafen-Zustellung"
+    },
+    "features": {
+      "selfDriveTitle": "Selbstfahrer oder mit Chauffeur",
+      "selfDriveDesc": "Luxusfahrzeuge selbst fahren oder mit privatem Chauffeur genießen.",
+      "periodTitle": "Tages-, Wochen- & Langzeitmiete",
+      "periodDesc": "Flexible Mietdauer von einzelnen Tagen bis zu mehreren Wochen.",
+      "customTitle": "Individuelles Angebot auf Anfrage",
+      "customDesc": "Maßgeschneiderte Angebote und maßgeschneiderte Tarife."
+    },
+    "form": {
+      "title": "Mietwagen anfragen",
+      "subtitle": "Schnell, einfach und unverbindlich.",
+      "step1": "Mietdaten",
+      "step2": "Ihre Angaben",
+      "step3": "Anfrage senden",
+      "name": "Name *",
+      "namePlaceholder": "Name *",
+      "email": "E-Mail-Adresse *",
+      "emailPlaceholder": "E-Mail-Adresse *",
+      "phone": "Telefonnummer *",
+      "phonePlaceholder": "Telefonnummer *",
+      "pickup": "Abholort / Zustelladresse *",
+      "pickupPlaceholder": "Abholort / Zustelladresse *",
+      "startDateLabel": "Mietbeginn",
+      "startDatePlaceholder": "Datum & Uhrzeit *",
+      "endDateLabel": "Mietende",
+      "endDatePlaceholder": "Datum & Uhrzeit *",
+      "notes": "Gewünschtes Fahrzeug / Notizen",
+      "notesPlaceholder": "Gewünschtes Fahrzeug / Notizen",
+      "submit": "MIETWAGEN ANFRAGEN",
+      "submitting": "Wird gesendet...",
+      "successTitle": "Mietwagenanfrage erfolgreich gesendet!",
+      "successDesc": "Vielen Dank für Ihre Anfrage. Wir prüfen die Verfügbarkeit Ihres gewünschten Fahrzeugs und senden Ihnen zeitnah ein individuelles Angebot.",
+      "refId": "Referenznummer",
+      "whatsappButton": "Direkt via WhatsApp abstimmen",
+      "anotherRequest": "Neue Mietwagenanfrage",
+      "validationError": "Bitte füllen Sie alle erforderlichen Pflichtfelder (*) aus."
+    }
   }
 }

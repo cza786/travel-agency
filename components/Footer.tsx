@@ -20,7 +20,7 @@ export function Footer() {
           {/* Column 1: Brand Logo */}
           <div className="flex flex-col items-start">
             <Link href="/" className="inline-block group py-1">
-              <Logo className="origin-left transition-transform group-hover:scale-[1.02]" />
+              <Logo size="footer" className="origin-left transition-transform group-hover:scale-[1.02]" />
             </Link>
           </div>
 
