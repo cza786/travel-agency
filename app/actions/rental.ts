@@ -2,6 +2,7 @@
 
 import { Resend } from "resend";
 import { rentalFormSchema, RentalResponse } from "@/lib/rentalSchema";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function submitRentalInquiry(formData: unknown): Promise<RentalResponse> {
   const result = rentalFormSchema.safeParse(formData);
@@ -34,6 +35,28 @@ export async function submitRentalInquiry(formData: unknown): Promise<RentalResp
 
   const whatsappPhone = "436542122456"; // Austrian dispatch phone
   const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(waMessage)}`;
+
+  // Persist to Supabase Database
+  try {
+    const supabase = createAdminClient();
+    const { error: dbError } = await supabase.from("rentals").insert({
+      reference_id: referenceId,
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      pickup: data.pickup,
+      start_date: data.startDate,
+      end_date: data.endDate,
+      notes: data.notes || null,
+      locale: data.locale,
+      status: "pending",
+    });
+    if (dbError) {
+      console.error("Supabase rental insert error:", dbError);
+    }
+  } catch (dbErr) {
+    console.error("Supabase rental connection error:", dbErr);
+  }
 
   // Resend Email Dispatch
   const resendApiKey = process.env.RESEND_API_KEY;

@@ -12,6 +12,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { useBookingModal } from "./BookingModal";
+import { useLivePricing } from "@/lib/useLivePricing";
 
 interface FixedPriceRoute {
   id: string;
@@ -27,6 +28,7 @@ export function PricesSection() {
   const t = useTranslations("prices");
   const tCommon = useTranslations("common");
   const { openBooking } = useBookingModal();
+  const { getPrice } = useLivePricing();
 
   const fixedRoutes: FixedPriceRoute[] = [
     {
@@ -163,7 +165,7 @@ export function PricesSection() {
 
               {/* Right: Slanted Brushed Silver Metallic Badge */}
               <div className="relative shrink-0 flex items-center justify-center pl-4 sm:pl-6 pr-3 sm:pr-5 py-3 sm:py-3.5 bg-silver-metallic text-obsidian font-extrabold text-xs sm:text-sm md:text-base tracking-tight shadow-md clip-diagonal transition-transform group-hover:brightness-105 min-w-[76px] sm:min-w-[90px] text-right">
-                <span>{route.price}</span>
+                <span>{getPrice(route.id, route.price)}</span>
               </div>
             </div>
           ))}
@@ -220,7 +222,7 @@ export function PricesSection() {
                     {t("kmTierShort")}
                   </div>
                   <div className="text-base sm:text-lg md:text-xl font-extrabold text-white tracking-tight leading-tight">
-                    3.10 <span className="text-xs sm:text-sm font-semibold text-silver-muted">€ / km</span>
+                    {getPrice("km-short", "3.10 € / km")}
                   </div>
                   <div className="text-[10px] sm:text-[11px] text-silver-muted mt-0.5 font-normal">
                     {t("kmTierShortDesc")}
@@ -255,7 +257,7 @@ export function PricesSection() {
                     {t("kmTierLong")}
                   </div>
                   <div className="text-base sm:text-lg md:text-xl font-extrabold text-white tracking-tight leading-tight">
-                    2.80 <span className="text-xs sm:text-sm font-semibold text-silver-muted">€ / km</span>
+                    {getPrice("km-long", "2.80 € / km")}
                   </div>
                   <div className="text-[10px] sm:text-[11px] text-silver-muted mt-0.5 font-normal">
                     {t("kmTierLongDesc")}

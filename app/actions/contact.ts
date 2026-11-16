@@ -1,6 +1,7 @@
 "use server";
 
 import { Resend } from "resend";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export interface ContactFormState {
   success: boolean;
@@ -33,6 +34,23 @@ export async function submitContactMessage(formData: FormData): Promise<ContactF
       success: false,
       error: locale === "de" ? "Bitte verfassen Sie eine kurze Nachricht." : locale === "ar" ? "يرجى كتابة رسالتك." : "Please write a brief message.",
     };
+  }
+
+  // Persist to Supabase Database
+  try {
+    const supabase = createAdminClient();
+    const { error: dbError } = await supabase.from("contact_messages").insert({
+      name,
+      email,
+      message,
+      locale,
+      status: "unread",
+    });
+    if (dbError) {
+      console.error("Supabase contact insert error:", dbError);
+    }
+  } catch (dbErr) {
+    console.error("Supabase contact connection error:", dbErr);
   }
 
   const resendApiKey = process.env.RESEND_API_KEY;

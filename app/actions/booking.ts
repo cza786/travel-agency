@@ -2,6 +2,7 @@
 
 import { Resend } from "resend";
 import { bookingFormSchema, BookingResponse } from "@/lib/bookingSchema";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function submitBookingInquiry(formData: unknown): Promise<BookingResponse> {
   const result = bookingFormSchema.safeParse(formData);
@@ -37,6 +38,33 @@ export async function submitBookingInquiry(formData: unknown): Promise<BookingRe
 
   const whatsappPhone = "436641234567"; // Austrian dispatch number
   const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(waMessage)}`;
+
+  // Persist to Supabase Database
+  try {
+    const supabase = createAdminClient();
+    const { error: dbError } = await supabase.from("bookings").insert({
+      reference_id: referenceId,
+      full_name: data.fullName,
+      email: data.email,
+      phone: data.phone,
+      pickup: data.pickup,
+      dropoff: data.dropoff,
+      date: data.date,
+      time: data.time,
+      flight_number: data.flightNumber || null,
+      passengers: data.passengers,
+      luggage: data.luggage,
+      vehicle: data.vehicle,
+      notes: data.notes || null,
+      locale: data.locale,
+      status: "pending",
+    });
+    if (dbError) {
+      console.error("Supabase booking insert error:", dbError);
+    }
+  } catch (dbErr) {
+    console.error("Supabase connection error:", dbErr);
+  }
 
   // Resend Email Dispatch
   const resendApiKey = process.env.RESEND_API_KEY;

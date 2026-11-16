@@ -21,6 +21,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useBookingModal } from "./BookingModal";
+import { useLivePricing } from "@/lib/useLivePricing";
 
 interface AirportInfo {
   id: string;
@@ -46,6 +47,7 @@ export function AirportTransfersView() {
   const locale = useLocale();
   const isRtl = locale === "ar";
   const { openBooking } = useBookingModal();
+  const { getPrice } = useLivePricing();
 
   // State for the interactive Quick Bar
   const [selectedAirport, setSelectedAirport] = useState("Flughafen Salzburg (SZG)");
@@ -442,7 +444,7 @@ export function AirportTransfersView() {
                       {t("routes.fromPrice")}
                     </span>
                     <span className="text-sm font-extrabold text-obsidian">
-                      {t(route.priceKey)}
+                      {getPrice(`air-${route.id}`, t(route.priceKey))}
                     </span>
                     <div className="w-6 h-6 rounded-full bg-[#ECC880] flex items-center justify-center shrink-0 ml-auto group-hover:scale-110 transition-transform">
                       <ArrowRight className="w-3.5 h-3.5 text-obsidian rtl:rotate-180" strokeWidth={2.5} />
