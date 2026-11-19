@@ -16,6 +16,7 @@ import {
   Briefcase,
   CheckCircle2,
   ChevronRight,
+  ChevronDown,
   Loader2,
   Send,
   Car,
@@ -23,6 +24,7 @@ import {
 import { submitBookingInquiry } from "@/app/actions/booking";
 import { BookingFormData } from "@/lib/bookingSchema";
 import { WhatsAppIcon } from "./WhatsAppIcon";
+import { AddressAutocomplete } from "./AddressAutocomplete";
 
 interface BookingFormProps {
   initialPickup?: string;
@@ -55,7 +57,7 @@ export function BookingForm({ initialPickup = "", initialDropoff = "", onSuccess
     flightNumber: "",
     passengers: 2,
     luggage: 2,
-    vehicle: "Mercedes-Benz V-Klasse VIP",
+    vehicle: "Mercedes-Benz V-Klasse / Vito",
     notes: "",
     locale: locale,
   });
@@ -308,22 +310,15 @@ export function BookingForm({ initialPickup = "", initialDropoff = "", onSuccess
         {/* STEP 1: Trip Details */}
         {step === 1 && (
           <div className="space-y-4 sm:space-y-5 animate-in fade-in duration-200">
-            {/* Pickup & Dropoff with Responsive Layout & Swap Button */}
+            {/* Pickup & Dropoff with Google Maps Address Autocomplete & Swap Button */}
             <div className="space-y-2 sm:space-y-0 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center sm:gap-2">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-silver-muted">
-                  <MapPin className="w-4 h-4" strokeWidth={1.5} />
-                </div>
-                <input
-                  type="text"
-                  name="pickup"
-                  value={formData.pickup}
-                  onChange={handleChange}
-                  placeholder={`${t("pickup")} *`}
-                  required
-                  className="w-full pl-10 pr-4 py-3 sm:py-3.5 bg-obsidian border border-hairline rounded-xl text-base sm:text-sm text-platinum-light placeholder:text-silver-muted focus:border-platinum-mid focus:outline-none transition-colors"
-                />
-              </div>
+              <AddressAutocomplete
+                name="pickup"
+                value={formData.pickup}
+                onChange={(val) => setFormData((prev) => ({ ...prev, pickup: val }))}
+                placeholder={`${t("pickup")} *`}
+                required
+              />
 
               {/* Swap Button (Vertical on mobile, horizontal on tablet/desktop) */}
               <div className="flex justify-center -my-1 sm:my-0 relative z-10">
@@ -337,20 +332,13 @@ export function BookingForm({ initialPickup = "", initialDropoff = "", onSuccess
                 </button>
               </div>
 
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-silver-muted">
-                  <MapPin className="w-4 h-4" strokeWidth={1.5} />
-                </div>
-                <input
-                  type="text"
-                  name="dropoff"
-                  value={formData.dropoff}
-                  onChange={handleChange}
-                  placeholder={`${t("dropoff")} *`}
-                  required
-                  className="w-full pl-10 pr-4 py-3 sm:py-3.5 bg-obsidian border border-hairline rounded-xl text-base sm:text-sm text-platinum-light placeholder:text-silver-muted focus:border-platinum-mid focus:outline-none transition-colors"
-                />
-              </div>
+              <AddressAutocomplete
+                name="dropoff"
+                value={formData.dropoff}
+                onChange={(val) => setFormData((prev) => ({ ...prev, dropoff: val }))}
+                placeholder={`${t("dropoff")} *`}
+                required
+              />
             </div>
 
             {/* Date, Time & Flight Number (Responsive: 2-col on mobile, 3-col on tablet/desktop) */}
@@ -399,79 +387,76 @@ export function BookingForm({ initialPickup = "", initialDropoff = "", onSuccess
               </div>
             </div>
 
-            {/* Passengers & Luggage */}
+            {/* Passengers & Luggage - Unified, Full-Box Clickable Selectors */}
             <div className="grid grid-cols-2 gap-3 pt-1">
-              <div className="flex items-center justify-between px-3.5 py-3 bg-obsidian border border-hairline rounded-xl">
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-silver-muted">
+              {/* Passengers Box */}
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-silver-muted group-hover:text-white transition-colors">
                   <Users className="w-4 h-4" strokeWidth={1.5} />
-                  <span>{t("passengers")}</span>
                 </div>
                 <select
                   name="passengers"
                   value={formData.passengers}
                   onChange={handleChange}
-                  className="bg-transparent text-platinum-light text-xs sm:text-sm font-semibold focus:outline-none cursor-pointer"
+                  className="w-full pl-10 pr-8 py-3 sm:py-3.5 bg-obsidian border border-hairline rounded-xl text-base sm:text-sm font-medium text-platinum-light focus:border-platinum-mid focus:outline-none appearance-none cursor-pointer hover:border-hairline/80 transition-colors"
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-                    <option key={num} value={num} className="bg-obsidian text-white">
+                    <option key={num} value={num} className="bg-obsidian text-white py-1">
                       {num} {num === 1 ? t("personSingle") : t("personPlural")}
                     </option>
                   ))}
                 </select>
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-silver-muted">
+                  <ChevronDown className="w-4 h-4" strokeWidth={1.5} />
+                </div>
               </div>
 
-              <div className="flex items-center justify-between px-3.5 py-3 bg-obsidian border border-hairline rounded-xl">
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-silver-muted">
+              {/* Luggage Box */}
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-silver-muted group-hover:text-white transition-colors">
                   <Briefcase className="w-4 h-4" strokeWidth={1.5} />
-                  <span>{t("luggage")}</span>
                 </div>
                 <select
                   name="luggage"
                   value={formData.luggage}
                   onChange={handleChange}
-                  className="bg-transparent text-platinum-light text-xs sm:text-sm font-semibold focus:outline-none cursor-pointer"
+                  className="w-full pl-10 pr-8 py-3 sm:py-3.5 bg-obsidian border border-hairline rounded-xl text-base sm:text-sm font-medium text-platinum-light focus:border-platinum-mid focus:outline-none appearance-none cursor-pointer hover:border-hairline/80 transition-colors"
                 >
                   {[0, 1, 2, 3, 4, 5, 6, 8, 10, 12].map((num) => (
-                    <option key={num} value={num} className="bg-obsidian text-white">
-                      {num} {t("luggageUnit")}
+                    <option key={num} value={num} className="bg-obsidian text-white py-1">
+                      {num === 1 ? `${num} ${t("luggageSingle")}` : `${num} ${t("luggagePlural")}`}
                     </option>
                   ))}
                 </select>
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-silver-muted">
+                  <ChevronDown className="w-4 h-4" strokeWidth={1.5} />
+                </div>
               </div>
             </div>
 
-            {/* Vehicle Selection */}
+            {/* Vehicle Fleet Display */}
             <div className="space-y-1.5 pt-1">
-              <label className="text-[11px] sm:text-xs text-silver-muted flex items-center gap-1.5">
-                <Car className="w-3.5 h-3.5 text-platinum-mid" strokeWidth={1.5} />
-                <span>{t("vehicle")}</span>
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setFormData((p) => ({ ...p, vehicle: "Mercedes-Benz V-Klasse VIP" }))}
-                  className={`p-3.5 rounded-xl border text-left rtl:text-right transition-all ${
-                    formData.vehicle.includes("V-Klasse")
-                      ? "bg-graphite-elevated border-platinum-mid text-white shadow-md"
-                      : "bg-obsidian border-hairline text-silver-muted hover:border-hairline hover:text-platinum-mid"
-                  }`}
-                >
-                  <div className="text-xs sm:text-sm font-semibold text-platinum-light">Mercedes V-Klasse VIP</div>
-                  <div className="text-[11px] text-silver-muted">{t("vClassCapacity")}</div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setFormData((p) => ({ ...p, vehicle: "Mercedes-Benz S-Klasse / E-Klasse" }))}
-                  className={`p-3.5 rounded-xl border text-left rtl:text-right transition-all ${
-                    formData.vehicle.includes("S-Klasse")
-                      ? "bg-graphite-elevated border-platinum-mid text-white shadow-md"
-                      : "bg-obsidian border-hairline text-silver-muted hover:border-hairline hover:text-platinum-mid"
-                  }`}
-                >
-                  <div className="text-xs sm:text-sm font-semibold text-platinum-light">Mercedes S- / E-Klasse</div>
-                  <div className="text-[11px] text-silver-muted">{t("sClassCapacity")}</div>
-                </button>
+              <div className="flex items-center justify-between text-[11px] sm:text-xs text-silver-muted px-0.5">
+                <span className="flex items-center gap-1.5">
+                  <Car className="w-3.5 h-3.5 text-platinum-mid" strokeWidth={1.5} />
+                  <span>{t("vehicle")}</span>
+                </span>
+                <span className="text-[10px] font-medium text-emerald-400 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/25">
+                  {t("fixedPriceBadge")}
+                </span>
+              </div>
+              <div className="p-3.5 sm:p-4 rounded-xl border border-hairline/90 bg-obsidian flex items-center justify-between">
+                <div>
+                  <div className="text-xs sm:text-sm font-semibold text-platinum-light">
+                    {t("vehicleVan")}
+                  </div>
+                  <div className="text-[11px] text-silver-muted mt-0.5">
+                    {t("vClassCapacity")}
+                  </div>
+                </div>
+                <div className="w-6 h-6 rounded-full bg-platinum-dark/20 border border-platinum-mid/40 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" strokeWidth={2} />
+                </div>
               </div>
             </div>
 
@@ -625,7 +610,9 @@ export function BookingForm({ initialPickup = "", initialDropoff = "", onSuccess
                 )}
                 <div>
                   <span className="block text-[10px] uppercase text-silver-muted/70">{t("luggageLabel")}</span>
-                  <span className="text-white font-medium block">{formData.luggage} {t("luggageUnit")}</span>
+                  <span className="text-white font-medium block">
+                    {formData.luggage === 1 ? `${formData.luggage} ${t("luggageSingle")}` : `${formData.luggage} ${t("luggagePlural")}`}
+                  </span>
                 </div>
               </div>
 

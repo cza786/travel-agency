@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   Calendar,
@@ -11,7 +11,7 @@ import {
   Mountain,
   Car,
   Bike,
-  ArrowUpRight,
+  Key,
   ChevronDown,
   ArrowRight,
   TrendingUp,
@@ -23,7 +23,8 @@ interface BookingItem {
   service: string;
   dateTime: string;
   status: "Confirmed" | "Pending" | "Cancelled" | "Completed";
-  iconType: "plane" | "mountain" | "car" | "bike";
+  iconType: "plane" | "mountain" | "car" | "bike" | "key";
+  createdAt: string;
 }
 
 export default function AdminDashboardPage() {
@@ -36,7 +37,7 @@ export default function AdminDashboardPage() {
     rating: "4.9",
   });
 
-  // Default design mock bookings matching the exact provided screenshot
+  // Default design mock bookings matching screenshot
   const initialBookings: BookingItem[] = [
     {
       id: "1",
@@ -44,6 +45,7 @@ export default function AdminDashboardPage() {
       dateTime: "Apr 26, 2025 · 10:30 AM",
       status: "Confirmed",
       iconType: "plane",
+      createdAt: new Date().toISOString(),
     },
     {
       id: "2",
@@ -51,6 +53,7 @@ export default function AdminDashboardPage() {
       dateTime: "Apr 25, 2025 · 02:15 PM",
       status: "Pending",
       iconType: "mountain",
+      createdAt: new Date().toISOString(),
     },
     {
       id: "3",
@@ -58,6 +61,7 @@ export default function AdminDashboardPage() {
       dateTime: "Apr 25, 2025 · 01:20 PM",
       status: "Confirmed",
       iconType: "car",
+      createdAt: new Date().toISOString(),
     },
     {
       id: "4",
@@ -65,65 +69,128 @@ export default function AdminDashboardPage() {
       dateTime: "Apr 24, 2025 · 04:45 PM",
       status: "Cancelled",
       iconType: "bike",
+      createdAt: new Date().toISOString(),
     },
   ];
 
-  // Fetch real data from Supabase if present
-  useEffect(() => {
-    async function fetchSupabaseData() {
-      try {
-        const supabase = createClient();
-        const { data, error, count } = await supabase
-          .from("bookings")
-          .select("*", { count: "exact" })
-          .order("created_at", { ascending: false })
-          .limit(4);
+  const fetchSupabaseData = useCallback(async () => {
+    try {
+      const supabase = createClient();
 
-        if (!error && data && data.length > 0) {
-          const mapped: BookingItem[] = data.map((b) => {
-            let iconType: "plane" | "mountain" | "car" | "bike" = "car";
-            const vLower = (b.vehicle || "").toLowerCase();
-            const pickupLower = (b.pickup || "").toLowerCase();
-            if (pickupLower.includes("airport") || pickupLower.includes("flughafen") || b.flight_number) {
-              iconType = "plane";
-            } else if (vLower.includes("excursion") || pickupLower.includes("grossglockner")) {
-              iconType = "mountain";
-            } else if (vLower.includes("bike") || pickupLower.includes("bike")) {
-              iconType = "bike";
-            }
+      // 1. Fetch real bookings
+      const { data: bData, count: bCount } = await supabase
+        .from("bookings")
+        .select("*", { count: "exact" })
+        .order("created_at", { ascending: false })
+        .limit(6);
 
-            const statusMap: Record<string, "Confirmed" | "Pending" | "Cancelled" | "Completed"> = {
-              confirmed: "Confirmed",
-              pending: "Pending",
-              cancelled: "Cancelled",
-              completed: "Completed",
-            };
+      // 2. Fetch real rentals
+      const { data: rData, count: rCount } = await supabase
+        .from("rentals")
+        .select("*", { count: "exact" })
+        .order("created_at", { ascending: false })
+        .limit(6);
 
-            return {
-              id: b.id,
-              service: b.vehicle || "VIP Chauffeur Transfer",
-              dateTime: `${b.date} · ${b.time}`,
-              status: statusMap[b.status] || "Pending",
-              iconType,
-            };
-          });
+      // 3. Fetch contact inquiries count
+      const { count: cCount } = await supabase
+        .from("contact_messages")
+        .select("*", { count: "exact", head: true });
 
-          setRealBookings(mapped);
-          if (count && count > 0) {
-            setCounts((prev) => ({ ...prev, bookings: prev.bookings + count }));
+      const combined: BookingItem[] = [];
+
+      if (bData && bData.length > 0) {
+        bData.forEach((b) => {
+          let iconType: "plane" | "mountain" | "car" | "bike" | "key" = "car";
+          const vLower = (b.vehicle || "").toLowerCase();
+          const pickupLower = (b.pickup || "").toLowerCase();
+          if (pickupLower.includes("airport") || pickupLower.includes("flughafen") || b.flight_number) {
+            iconType = "plane";
+          } else if (vLower.includes("excursion") || pickupLower.includes("grossglockner")) {
+            iconType = "mountain";
+          } else if (vLower.includes("bike") || pickupLower.includes("bike")) {
+            iconType = "bike";
           }
-        }
-      } catch {
-        // Fallback gracefully to design preset
-      }
-    }
 
-    fetchSupabaseData();
+          const statusMap: Record<string, "Confirmed" | "Pending" | "Cancelled" | "Completed"> = {
+            confirmed: "Confirmed",
+            pending: "Pending",
+            cancelled: "Cancelled",
+            completed: "Completed",
+          };
+
+          combined.push({
+            id: b.id,
+            service: b.vehicle || "VIP Chauffeur Transfer",
+            dateTime: `${b.date} · ${b.time} Uhr`,
+            status: statusMap[b.status] || "Pending",
+            iconType,
+            createdAt: b.created_at || new Date().toISOString(),
+          });
+        });
+      }
+
+      if (rData && rData.length > 0) {
+        rData.forEach((r) => {
+          const statusMap: Record<string, "Confirmed" | "Pending" | "Cancelled" | "Completed"> = {
+            confirmed: "Confirmed",
+            pending: "Pending",
+            cancelled: "Cancelled",
+            completed: "Completed",
+          };
+
+          combined.push({
+            id: r.id,
+            service: `Mietwagen (${r.notes ? r.notes.slice(0, 24) : "Exklusiv"})`,
+            dateTime: `${r.start_date} → ${r.end_date}`,
+            status: statusMap[r.status] || "Pending",
+            iconType: "key",
+            createdAt: r.created_at || new Date().toISOString(),
+          });
+        });
+      }
+
+      if (combined.length > 0) {
+        combined.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        setRealBookings(combined.slice(0, 4));
+      }
+
+      const totalInquiries = (bCount || 0) + (rCount || 0);
+      if (totalInquiries > 0) {
+        setCounts((prev) => ({
+          ...prev,
+          bookings: 248 + totalInquiries,
+          customers: (1024 + totalInquiries + (cCount || 0)).toLocaleString(),
+        }));
+      }
+    } catch {
+      // Fallback gracefully
+    }
   }, []);
+
+  useEffect(() => {
+    fetchSupabaseData();
+
+    // Realtime listener for instant Dashboard updates
+    try {
+      const supabase = createClient();
+      const channel = supabase
+        .channel("admin-dashboard-realtime")
+        .on("postgres_changes", { event: "*", schema: "public", table: "bookings" }, () => fetchSupabaseData())
+        .on("postgres_changes", { event: "*", schema: "public", table: "rentals" }, () => fetchSupabaseData())
+        .on("postgres_changes", { event: "*", schema: "public", table: "contact_messages" }, () => fetchSupabaseData())
+        .subscribe();
+
+      return () => {
+        supabase.removeChannel(channel);
+      };
+    } catch {
+      // fallback
+    }
+  }, [fetchSupabaseData]);
 
   const displayBookings = realBookings.length > 0 ? realBookings : initialBookings;
 
-  const renderServiceIcon = (type: "plane" | "mountain" | "car" | "bike") => {
+  const renderServiceIcon = (type: "plane" | "mountain" | "car" | "bike" | "key") => {
     switch (type) {
       case "plane":
         return <Plane className="w-4 h-4 text-gray-300" />;
@@ -131,6 +198,8 @@ export default function AdminDashboardPage() {
         return <Mountain className="w-4 h-4 text-gray-300" />;
       case "bike":
         return <Bike className="w-4 h-4 text-gray-300" />;
+      case "key":
+        return <Key className="w-4 h-4 text-[#DFBA73]" />;
       case "car":
       default:
         return <Car className="w-4 h-4 text-gray-300" />;
@@ -175,7 +244,7 @@ export default function AdminDashboardPage() {
           Dashboard
         </h1>
         <p className="text-xs sm:text-sm text-[#9CA3AF] mt-1">
-          Overview of your business
+          Real-time business performance & dispatch overview
         </p>
       </div>
 
@@ -188,12 +257,12 @@ export default function AdminDashboardPage() {
               <Calendar className="w-5 h-5 text-[#DFBA73]" />
             </div>
             <div>
-              <p className="text-xs text-[#9CA3AF] font-medium">Total Bookings</p>
+              <p className="text-xs text-[#9CA3AF] font-medium">Total Inquiries</p>
               <h3 className="text-2xl font-extrabold text-white mt-0.5">
                 {counts.bookings}
               </h3>
               <p className="text-[11px] font-semibold text-[#10B981] flex items-center gap-1 mt-0.5">
-                <span>↑</span> 12%
+                <span>↑</span> Live Synced
               </p>
             </div>
           </div>
@@ -224,7 +293,7 @@ export default function AdminDashboardPage() {
               <Users className="w-5 h-5 text-[#DFBA73]" />
             </div>
             <div>
-              <p className="text-xs text-[#9CA3AF] font-medium">Active Customers</p>
+              <p className="text-xs text-[#9CA3AF] font-medium">Customer Contacts</p>
               <h3 className="text-2xl font-extrabold text-white mt-0.5">
                 {counts.customers}
               </h3>
@@ -258,11 +327,9 @@ export default function AdminDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Bookings Overview Spline Line Chart (7 cols) */}
         <div className="lg:col-span-7 bg-[#0D121B] border border-[#1C2433] rounded-2xl p-6">
-          {/* Header Row */}
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-base font-bold text-white">Bookings Overview</h2>
+            <h2 className="text-base font-bold text-white">Inquiries & Dispatch Overview</h2>
 
-            {/* Time Filter Pill Dropdown */}
             <div className="relative">
               <button
                 type="button"
@@ -277,7 +344,6 @@ export default function AdminDashboardPage() {
           {/* SVG Interactive Line Chart */}
           <div className="w-full relative pt-2 pb-1">
             <div className="flex items-center gap-3">
-              {/* Y-axis Labels */}
               <div className="flex flex-col justify-between h-44 text-[11px] text-gray-500 font-mono select-none pr-1">
                 <span>150</span>
                 <span>100</span>
@@ -285,9 +351,7 @@ export default function AdminDashboardPage() {
                 <span>0</span>
               </div>
 
-              {/* Chart SVG */}
               <div className="flex-1 h-44 relative">
-                {/* Horizontal Grid lines */}
                 <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
                   <div className="border-b border-[#1A2230]/70 w-full" />
                   <div className="border-b border-[#1A2230]/70 w-full" />
@@ -295,7 +359,6 @@ export default function AdminDashboardPage() {
                   <div className="border-b border-[#1A2230]/70 w-full" />
                 </div>
 
-                {/* SVG Curve */}
                 <svg
                   viewBox="0 0 500 176"
                   preserveAspectRatio="none"
@@ -312,7 +375,6 @@ export default function AdminDashboardPage() {
                     </filter>
                   </defs>
 
-                  {/* Gradient Fill under spline */}
                   <path
                     d="M 10,132 
                        C 50,130 65,95 100,95 
@@ -324,7 +386,6 @@ export default function AdminDashboardPage() {
                     fill="url(#goldArea)"
                   />
 
-                  {/* Glowing Stroke Path */}
                   <path
                     d="M 10,132 
                        C 50,130 65,95 100,95 
@@ -339,7 +400,6 @@ export default function AdminDashboardPage() {
                     filter="url(#goldGlow)"
                   />
 
-                  {/* Key Trend Dots */}
                   <circle cx="100" cy="95" r="3.5" fill="#DFBA73" className="drop-shadow" />
                   <circle cx="270" cy="68" r="3.5" fill="#DFBA73" className="drop-shadow" />
                   <circle cx="375" cy="42" r="4.5" fill="#FFF" stroke="#DFBA73" strokeWidth="2" />
@@ -348,7 +408,6 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            {/* X-axis Days */}
             <div className="flex justify-between pl-8 pr-1 mt-3 text-[11px] text-gray-500 font-medium select-none">
               <span>Mon</span>
               <span>Tue</span>
@@ -364,7 +423,7 @@ export default function AdminDashboardPage() {
         {/* Right Column: Recent Bookings (5 cols) */}
         <div className="lg:col-span-5 bg-[#0D121B] border border-[#1C2433] rounded-2xl p-6">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-base font-bold text-white">Recent Bookings</h2>
+            <h2 className="text-base font-bold text-white">Recent Customer Submissions</h2>
             <Link
               href="/admin/bookings"
               className="text-xs text-[#DFBA73] hover:text-[#E8C888] font-semibold flex items-center gap-1 transition-colors"

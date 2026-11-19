@@ -159,27 +159,27 @@ export function CarRentalView() {
       {/* =========================================================================
           PILLS / BADGES ROW (Under Hero Card)
           ========================================================================= */}
-      <section className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 sm:gap-3">
+      <section className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
         {/* Pill 1: Flexible Mietdauer */}
-        <div className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs">
-          <CalendarDays className="w-4 h-4 text-white/90 shrink-0" strokeWidth={1.75} />
-          <span className="text-xs sm:text-sm font-medium tracking-tight whitespace-nowrap">
+        <div className="flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs text-center">
+          <CalendarDays className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={1.75} />
+          <span className="text-xs sm:text-sm font-medium tracking-tight">
             {t("pills.flexible")}
           </span>
         </div>
 
         {/* Pill 2: Vollkasko & Winterpaket */}
-        <div className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs">
-          <ShieldCheck className="w-4 h-4 text-white/90 shrink-0" strokeWidth={1.75} />
-          <span className="text-xs sm:text-sm font-medium tracking-tight whitespace-nowrap">
+        <div className="flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs text-center">
+          <ShieldCheck className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={1.75} />
+          <span className="text-xs sm:text-sm font-medium tracking-tight">
             {t("pills.insurance")}
           </span>
         </div>
 
         {/* Pill 3: Hotel- & Flughafen-Zustellung */}
-        <div className="flex-1 min-w-[150px] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs">
-          <Car className="w-4 h-4 text-white/90 shrink-0" strokeWidth={1.75} />
-          <span className="text-xs sm:text-sm font-medium tracking-tight whitespace-nowrap">
+        <div className="flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs text-center">
+          <Car className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={1.75} />
+          <span className="text-xs sm:text-sm font-medium tracking-tight">
             {t("pills.delivery")}
           </span>
         </div>

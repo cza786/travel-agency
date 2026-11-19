@@ -32,22 +32,64 @@ interface AirportInfo {
   pickupValue: string;
 }
 
-interface PopularRoute {
-  id: string;
-  nameKey: string;
-  priceKey: string;
-  image: string;
-  pickup: string;
-  dropoff: string;
-}
-
 export function AirportTransfersView() {
   const t = useTranslations("airportPage");
   const tCommon = useTranslations("common");
   const locale = useLocale();
   const isRtl = locale === "ar";
   const { openBooking } = useBookingModal();
-  const { getPrice } = useLivePricing();
+  const { prices, getPrice } = useLivePricing();
+
+  // Helper to map destination image based on service name or id
+  const getRouteImage = (service: string, id: string): string => {
+    const s = service.toLowerCase();
+    if (s.includes("salzburg") || id === "air-r1" || id === "r1") return "/images/routes/salzburg.jpg";
+    if (s.includes("münchen") || s.includes("munich") || id === "air-r2" || id === "r2") return "/images/routes/munich.jpg";
+    if (s.includes("innsbruck") || id === "air-r3" || id === "r3") return "/images/routes/innsbruck.jpg";
+    if (s.includes("wien") || s.includes("vienna") || id === "air-r4" || id === "r4") return "/images/routes/vienna.jpg";
+    return "/images/clean-airport.jpg";
+  };
+
+  const getRoutePickupDropoff = (service: string) => {
+    const s = service.toLowerCase();
+    if (s.includes("salzburg")) {
+      return { pickup: "Zell am See / Kaprun", dropoff: "Flughafen Salzburg (SZG)" };
+    }
+    if (s.includes("münchen") || s.includes("munich")) {
+      return { pickup: "Zell am See / Kaprun", dropoff: "Flughafen München (MUC)" };
+    }
+    if (s.includes("innsbruck")) {
+      return { pickup: "Zell am See / Kaprun", dropoff: "Flughafen Innsbruck (INN)" };
+    }
+    if (s.includes("wien") || s.includes("vienna")) {
+      return { pickup: "Zell am See / Kaprun", dropoff: "Flughafen Wien (VIE)" };
+    }
+    const parts = service.split(/[↔→-]/);
+    if (parts.length >= 2) {
+      return { pickup: parts[0].trim(), dropoff: parts[1].trim() };
+    }
+    return { pickup: "Zell am See / Kaprun", dropoff: service };
+  };
+
+  const getRouteTitle = (id: string, service: string): string => {
+    if (id === "air-r1" || id === "r1") return t("routes.r1");
+    if (id === "air-r2" || id === "r2") return t("routes.r2");
+    if (id === "air-r3" || id === "r3") return t("routes.r3");
+    if (id === "air-r4" || id === "r4") return t("routes.r4");
+    return service;
+  };
+
+  // Live airport routes managed by admin from /admin/pricing
+  const liveAirportRoutes = prices.filter(
+    (p) => p.category === "airport_route" && p.status === "Active"
+  );
+
+  const fallbackRoutes = [
+    { id: "air-r1", service: "Zell am See ↔ Salzburg", price: "220 €" },
+    { id: "air-r2", service: "Zell am See ↔ München", price: "480 €" },
+    { id: "air-r3", service: "Zell am See ↔ Innsbruck", price: "450 €" },
+    { id: "air-r4", service: "Zell am See ↔ Wien", price: "800 €" },
+  ];
 
   // State for the interactive Quick Bar
   const [selectedAirport, setSelectedAirport] = useState("Flughafen Salzburg (SZG)");
@@ -92,41 +134,6 @@ export function AirportTransfersView() {
     },
   ];
 
-  const popularRoutes: PopularRoute[] = [
-    {
-      id: "r1",
-      nameKey: "routes.r1",
-      priceKey: "routes.r1Price",
-      image: "/images/routes/salzburg-munich-mockup.jpg",
-      pickup: "Flughafen Salzburg (SZG)",
-      dropoff: "München Zentrum / MUC",
-    },
-    {
-      id: "r2",
-      nameKey: "routes.r2",
-      priceKey: "routes.r2Price",
-      image: "/images/routes/salzburg-vienna-mockup.jpg",
-      pickup: "Flughafen Salzburg (SZG)",
-      dropoff: "Wien Zentrum / VIE",
-    },
-    {
-      id: "r3",
-      nameKey: "routes.r3",
-      priceKey: "routes.r3Price",
-      image: "/images/routes/salzburg-innsbruck-mockup.jpg",
-      pickup: "Flughafen Salzburg (SZG)",
-      dropoff: "Innsbruck Zentrum / INN",
-    },
-    {
-      id: "r4",
-      nameKey: "routes.r4",
-      priceKey: "routes.r4Price",
-      image: "/images/routes/munich-salzburg-mockup.jpg",
-      pickup: "Flughafen München (MUC)",
-      dropoff: "Salzburg / Zell am See",
-    },
-  ];
-
   const handleAirportCardClick = (airport: AirportInfo) => {
     setSelectedAirport(airport.pickupValue);
     openBooking({ pickup: airport.pickupValue, dropoff: selectedDestination });
@@ -137,13 +144,6 @@ export function AirportTransfersView() {
     openBooking({
       pickup: selectedAirport,
       dropoff: selectedDestination,
-    });
-  };
-
-  const handleRouteClick = (route: PopularRoute) => {
-    openBooking({
-      pickup: route.pickup,
-      dropoff: route.dropoff,
     });
   };
 
@@ -427,44 +427,58 @@ export function AirportTransfersView() {
             </p>
           </div>
 
-          {/* 4 Route Cards on Right */}
+          {/* Route Cards on Right - Live updated, edited or deleted from /admin/pricing */}
           <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5 sm:gap-4">
-            {popularRoutes.map((route) => (
-              <div
-                key={route.id}
-                onClick={() => handleRouteClick(route)}
-                className="group cursor-pointer rounded-2xl bg-white/95 hover:bg-white text-obsidian shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-white/20 flex flex-col justify-between"
-              >
-                <div className="p-3.5 sm:p-4">
-                  <h3 className="text-xs sm:text-sm font-bold text-obsidian tracking-tight">
-                    {t(route.nameKey)}
-                  </h3>
-                  <div className="mt-2 flex items-center gap-2">
-                    <span className="text-xs font-semibold text-slate-500">
-                      {t("routes.fromPrice")}
-                    </span>
-                    <span className="text-sm font-extrabold text-obsidian">
-                      {getPrice(`air-${route.id}`, t(route.priceKey))}
-                    </span>
-                    <div className="w-6 h-6 rounded-full bg-[#ECC880] flex items-center justify-center shrink-0 ml-auto group-hover:scale-110 transition-transform">
-                      <ArrowRight className="w-3.5 h-3.5 text-obsidian rtl:rotate-180" strokeWidth={2.5} />
+            {(liveAirportRoutes.length > 0 ? liveAirportRoutes : fallbackRoutes).map((route) => {
+              const routeImage = getRouteImage(route.service, route.id);
+              const routeTitle = getRouteTitle(route.id, route.service);
+              const { pickup, dropoff } = getRoutePickupDropoff(route.service);
+
+              return (
+                <div
+                  key={route.id}
+                  onClick={() => openBooking({ pickup, dropoff })}
+                  className="group cursor-pointer rounded-2xl bg-white/95 hover:bg-white text-obsidian shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-white/20 flex flex-col justify-between"
+                >
+                  <div className="p-3.5 sm:p-4">
+                    <h3 className="text-xs sm:text-sm font-bold text-obsidian tracking-tight truncate">
+                      {routeTitle}
+                    </h3>
+                    <div className="mt-2 flex items-center gap-2">
+                      {route.price ? (
+                        <>
+                          <span className="text-xs font-semibold text-slate-500">
+                            {t("routes.fromPrice")}
+                          </span>
+                          <span className="text-sm font-extrabold text-obsidian">
+                            {route.price}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-xs font-semibold text-slate-500">
+                          {tCommon("onDemand")}
+                        </span>
+                      )}
+                      <div className="w-6 h-6 rounded-full bg-[#ECC880] flex items-center justify-center shrink-0 ml-auto group-hover:scale-110 transition-transform">
+                        <ArrowRight className="w-3.5 h-3.5 text-obsidian rtl:rotate-180" strokeWidth={2.5} />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* City visual on bottom */}
-                <div className="relative w-full h-14 bg-slate-900 overflow-hidden">
-                  <Image
-                    src={route.image}
-                    alt={t(route.nameKey)}
-                    fill
-                    sizes="(max-width: 640px) 100vw, 25vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  {/* Clean city photography (no baked-in prices or text) */}
+                  <div className="relative w-full h-24 sm:h-28 bg-slate-900 overflow-hidden">
+                    <Image
+                      src={routeImage}
+                      alt={routeTitle}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 25vw"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

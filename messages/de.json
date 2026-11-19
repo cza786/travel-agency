@@ -115,7 +115,20 @@
     "customDestination": "Wunschziel",
     "taxMautIncluded": "Inkl. österreichischer MwSt., Autobahnmaut & Meet & Greet",
     "allWheelVehicle": "Mercedes-Benz 4MATIC Allradfahrzeug",
-    "noHiddenFees": "Keine versteckten Gebühren oder Nachtzuschläge"
+    "noHiddenFees": "Keine versteckten Gebühren oder Nachtzuschläge",
+    "taximeterSectionTitle": "Taxameter-Tarife",
+    "taximeterSubtitle": "Amtlich geeichte Tarife für spontane Fahrten in Zell am See & Umgebung.",
+    "taximeterComingSoonBadge": "Informationen folgen in Kürze",
+    "taximeterComingSoonDesc": "Die detaillierten Taxameter-Tarife (Grundpreis, Tag-/Nachttarif & Wartezeit) werden derzeit aktualisiert und in Kürze hier veröffentlicht.",
+    "taximeterDirectInquiry": "Für Preisanfragen oder spontane Taxifahrten kontaktieren Sie uns gerne direkt.",
+    "taximeterBaseFare": "Grundgebühr / Einstieg",
+    "taximeterBaseFareDesc": "Amtliche Grundgebühr gemäß Tarifordnung",
+    "taximeterKmRate": "Kilometerpreis",
+    "taximeterKmRateDesc": "Abrechnung nach geeichtem Taxameter",
+    "taximeterWaitingTime": "Wartezeit",
+    "taximeterWaitingTimeDesc": "Pro Stunde bei Zwischenstopps & Wartezeiten",
+    "taximeterNotice": "Abrechnung erfolgt nach amtlich geeichtem Taxameter gemäß Salzburger Taxitarifordnung.",
+    "taximeterCta": "Taxifahrt jetzt anfragen"
   },
   "booking": {
     "pageTitle": "Transfer & Fahrservice in Zell am See",
@@ -142,15 +155,18 @@
     "flightNumberPlaceholder": "z.B. OS 123 oder LH 2450",
     "passengers": "Anzahl Personen",
     "luggage": "Gepäckstücke",
-    "vehicle": "Fahrzeugtyp",
-    "vehicleVan": "Mercedes-Benz V-Klasse VIP (bis 8 Pax)",
-    "vehicleSedan": "Mercedes-Benz S-Klasse / E-Klasse (bis 4 Pax)",
-    "vClassCapacity": "Bis 8 Personen · Allrad (4MATIC)",
-    "sClassCapacity": "Bis 4 Personen · VIP Limousine",
+    "vehicle": "Fahrzeug",
+    "vehicleVan": "Mercedes-Benz V-Klasse / Vito",
+    "vClassCapacity": "Bis 8 Personen · Allrad (4MATIC) oder ähnlich",
+    "fixedPriceBadge": "Fixpreis",
     "personSingle": "Person",
     "personPlural": "Personen",
     "paxUnit": "Pax",
     "luggageUnit": "Stück",
+    "luggageSingle": "Gepäckstück",
+    "luggagePlural": "Gepäckstücke",
+    "addressSuggestions": "Adressvorschläge",
+    "popularDestinations": "Beliebte Ziele",
     "timeSuffix": "Uhr",
     "summaryTitle": "Zusammenfassung",
     "vipChauffeurBadge": "First Class VIP Chauffeur",
@@ -322,14 +338,14 @@
       "title": "Beliebte Routen",
       "subtitle": "Komfortabel. Sicher. Pünktlich.",
       "fromPrice": "ab",
-      "r1": "Salzburg → München",
+      "r1": "Zell am See ↔ Salzburg",
       "r1Price": "220 €",
-      "r2": "Salzburg → Wien",
-      "r2Price": "240 €",
-      "r3": "Salzburg → Innsbruck",
-      "r3Price": "280 €",
-      "r4": "München → Salzburg",
-      "r4Price": "220 €"
+      "r2": "Zell am See ↔ München",
+      "r2Price": "480 €",
+      "r3": "Zell am See ↔ Innsbruck",
+      "r3Price": "450 €",
+      "r4": "Zell am See ↔ Wien",
+      "r4Price": "800 €"
     },
     "contactBar": {
       "phone": "+43 660 123 4567",
@@ -347,7 +363,7 @@
       "q2": "Wo treffe ich meinen Chauffeur am Flughafen?",
       "a2": "Ihr Fahrer wartet direkt am Ausgang des Sicherheitsbereichs / in der Ankunftshalle mit einem personalisierten Schild (Name oder Firmenlogo) und hilft Ihnen gerne mit dem Gepäck.",
       "q3": "Sind Kindersitze und Skigepäck im Preis enthalten?",
-      "a3": "Ja, bitte geben Sie die Anzahl der benötigten Kindersitze oder Babyschalen bei der Anfrage an. Unsere Mercedes V-Klasse bietet reichlich Stauraum für bis zu 8 Passagiere inklusive Ski-Ausrüstung und Koffern.",
+      "a3": "Ja, bitte geben Sie die Anzahl der benötigten Kindersitze oder Babyschalen bei der Anfrage an. Unsere Mercedes Vans bieten reichlich Stauraum für bis zu 8 Passagiere inklusive Ski-Ausrüstung und Koffern.",
       "q4": "Gibt es feste Pauschalpreise ohne Nacht- oder Wochenendzuschläge?",
       "a4": "Ja, wir garantieren transparente Festpreise für alle Flughafenstrecken inklusive Mautgebühren und Parkkosten – ohne versteckte Überraschungen."
     }
@@ -428,7 +444,8 @@
       "punctual": "Pünktlich & Flexibel"
     },
     "bookingWidget": {
-      "title": "Jetzt VIP Transfer buchen",
+      "title": "Jetzt Fahrt buchen",
+      "subtitle": "Bei uns ist jeder Fahrgast ein VIP – Ob Stadtrundfahrt, Restaurantbesuch oder Ski-Transfer: erstklassiger Service zu fairen Preisen.",
       "pickup": "Abholort",
       "pickupPlaceholder": "z. B. Salzburg Altstadt",
       "dropoff": "Zielort",
@@ -441,7 +458,7 @@
       "passengersOption1": "1 Person",
       "passengersOption2": "2 Personen",
       "passengersOption3": "3–4 Personen",
-      "passengersOption4": "5–8 Personen (VIP Van)",
+      "passengersOption4": "5–8 Personen (Großraum-Van)",
       "cta": "Anfrage senden"
     },
     "services": {
@@ -496,7 +513,7 @@
     "heroSubtitle": "Ob Tauernradweg, Transalp, Bikeparks oder Passüberquerungen – wir transportieren Ihre Bikes & E-Bikes sicher und komfortabel.",
     "usps": {
       "secureRacks": "Schonende Spezialträger & Anhänger",
-      "ebikeReady": "E-Bike & Carbonrahmen Spezialisiert",
+      "ebikeReady": "E-Bike & Carbon Spezialist",
       "returnService": "Flexibler Rückhol- & Pannenservice"
     },
     "bookingWidget": {

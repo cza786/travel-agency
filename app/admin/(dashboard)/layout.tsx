@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { AdminBrandLogo } from "@/components/admin/AdminBrandLogo";
 import { logoutAdminAction } from "@/app/admin/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 
 export default function AdminDashboardLayout({
   children,
@@ -31,6 +32,58 @@ export default function AdminDashboardLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [recentNotifications, setRecentNotifications] = useState<
+    Array<{ id: string; title: string; subtitle: string; time: string }>
+  >([]);
+
+  useEffect(() => {
+    async function loadNotifications() {
+      try {
+        const supabase = createClient();
+        const [{ data: b }, { data: r }, { data: m }] = await Promise.all([
+          supabase.from("bookings").select("id, full_name, pickup, created_at").order("created_at", { ascending: false }).limit(2),
+          supabase.from("rentals").select("id, name, pickup, created_at").order("created_at", { ascending: false }).limit(2),
+          supabase.from("contact_messages").select("id, name, message, created_at").order("created_at", { ascending: false }).limit(2),
+        ]);
+
+        const list: Array<{ id: string; title: string; subtitle: string; time: string; ts: number }> = [];
+        b?.forEach((item) => {
+          list.push({
+            id: `b-${item.id}`,
+            title: `Buchung: ${item.full_name}`,
+            subtitle: `Abholung: ${item.pickup}`,
+            time: new Date(item.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+            ts: new Date(item.created_at).getTime(),
+          });
+        });
+        r?.forEach((item) => {
+          list.push({
+            id: `r-${item.id}`,
+            title: `Mietwagen: ${item.name}`,
+            subtitle: `Ort: ${item.pickup}`,
+            time: new Date(item.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+            ts: new Date(item.created_at).getTime(),
+          });
+        });
+        m?.forEach((item) => {
+          list.push({
+            id: `m-${item.id}`,
+            title: `Nachricht: ${item.name}`,
+            subtitle: item.message?.slice(0, 36) + "...",
+            time: new Date(item.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+            ts: new Date(item.created_at).getTime(),
+          });
+        });
+
+        list.sort((x, y) => y.ts - x.ts);
+        setRecentNotifications(list.slice(0, 4));
+      } catch {
+        // fallback
+      }
+    }
+
+    loadNotifications();
+  }, []);
 
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -170,20 +223,29 @@ export default function AdminDashboardLayout({
 
               {/* Notification Popover */}
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-72 rounded-xl bg-[#101520] border border-[#20293B] shadow-2xl p-3 z-50">
+                <div className="absolute right-0 mt-2 w-80 rounded-xl bg-[#101520] border border-[#20293B] shadow-2xl p-3 z-50">
                   <div className="text-xs font-semibold text-white pb-2 border-b border-white/10 flex justify-between items-center">
                     <span>Notifications</span>
-                    <span className="text-[10px] text-[#DFBA73]">2 New</span>
+                    <span className="text-[10px] text-[#DFBA73] font-mono">
+                      {recentNotifications.length} Recent
+                    </span>
                   </div>
                   <div className="py-2 space-y-2 text-xs">
-                    <div className="p-2 rounded-lg bg-[#141B28] text-gray-300">
-                      <p className="font-medium text-white">New Booking Inquiry</p>
-                      <p className="text-[11px] text-gray-400">Airport Transfer · Munich to Zell am See</p>
-                    </div>
-                    <div className="p-2 rounded-lg bg-[#141B28] text-gray-300">
-                      <p className="font-medium text-white">Rental Request</p>
-                      <p className="text-[11px] text-gray-400">Mercedes V-Class · 3 Days</p>
-                    </div>
+                    {recentNotifications.length > 0 ? (
+                      recentNotifications.map((n) => (
+                        <div key={n.id} className="p-2.5 rounded-lg bg-[#141B28] text-gray-300 border border-white/5">
+                          <div className="flex justify-between items-start">
+                            <p className="font-semibold text-white truncate">{n.title}</p>
+                            <span className="text-[10px] text-gray-500 shrink-0 ml-2">{n.time}</span>
+                          </div>
+                          <p className="text-[11px] text-gray-400 mt-0.5 truncate">{n.subtitle}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="p-3 text-center text-gray-500 text-xs">
+                        No new notifications
+                      </div>
+                    )}
                   </div>
                 </div>
               )}

@@ -57,7 +57,7 @@ export function VipChauffeurTaxiView() {
       subtextKey: "services.city.subtext",
       descKey: "services.city.desc",
       icon: <Car className="w-5 h-5 text-obsidian" strokeWidth={2} />,
-      image: "/images/vip-taxi/salzburg-night-hd.jpg",
+      image: "/images/vip-taxi/salzburg-city-vip.jpg",
       defaultPickup: "Salzburg Altstadt / Hotel",
       defaultDropoff: "Salzburg Stadtrundfahrt & Sightseeing",
     },
@@ -153,18 +153,18 @@ export function VipChauffeurTaxiView() {
       </section>
 
       {/* 2. THREE PILLS / USPs */}
-      <section className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 sm:gap-3">
-        <div className="flex-1 min-w-[120px] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs">
+      <section className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+        <div className="flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs text-center">
           <Gem className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={2} />
-          <span className="text-xs sm:text-sm font-medium tracking-tight whitespace-nowrap">{t("usps.premium")}</span>
+          <span className="text-xs sm:text-sm font-medium tracking-tight">{t("usps.premium")}</span>
         </div>
-        <div className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs">
+        <div className="flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs text-center">
           <ShieldCheck className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={2} />
-          <span className="text-xs sm:text-sm font-medium tracking-tight whitespace-nowrap">{t("usps.discreet")}</span>
+          <span className="text-xs sm:text-sm font-medium tracking-tight">{t("usps.discreet")}</span>
         </div>
-        <div className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs">
+        <div className="flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs text-center">
           <Clock className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={2} />
-          <span className="text-xs sm:text-sm font-medium tracking-tight whitespace-nowrap">{t("usps.punctual")}</span>
+          <span className="text-xs sm:text-sm font-medium tracking-tight">{t("usps.punctual")}</span>
         </div>
       </section>
 
@@ -227,8 +227,8 @@ export function VipChauffeurTaxiView() {
             <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-white tracking-tight">
               {t("bookingWidget.title")}
             </h2>
-            <p className="text-xs sm:text-sm text-silver-muted font-normal">
-              {t("heroSubtitle")}
+            <p className="text-xs sm:text-sm text-silver-muted font-normal mt-0.5">
+              {t("bookingWidget.subtitle")}
             </p>
           </div>
         </div>

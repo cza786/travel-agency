@@ -11,7 +11,7 @@ export const bookingFormSchema = z.object({
   flightNumber: z.string().optional().default(""),
   passengers: z.coerce.number().int().min(1).max(8).default(2),
   luggage: z.coerce.number().int().min(0).max(16).default(2),
-  vehicle: z.string().default("Mercedes-Benz V-Klasse VIP"),
+  vehicle: z.string().default("Mercedes-Benz V-Klasse / Vito"),
   notes: z.string().optional().default(""),
   locale: z.string().default("de"),
 });

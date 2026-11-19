@@ -146,18 +146,18 @@ export function BicycleTransfersView() {
       </section>
 
       {/* 2. THREE PILLS / USPs */}
-      <section className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 sm:gap-3">
-        <div className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs">
+      <section className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
+        <div className="flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs text-center">
           <ShieldCheck className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={2} />
-          <span className="text-xs sm:text-sm font-medium tracking-tight whitespace-nowrap">{t("usps.secureRacks")}</span>
+          <span className="text-xs sm:text-sm font-medium tracking-tight">{t("usps.secureRacks")}</span>
         </div>
-        <div className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs">
+        <div className="flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs text-center">
           <Bike className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={2} />
-          <span className="text-xs sm:text-sm font-medium tracking-tight whitespace-nowrap">{t("usps.ebikeReady")}</span>
+          <span className="text-xs sm:text-sm font-medium tracking-tight">{t("usps.ebikeReady")}</span>
         </div>
-        <div className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs">
+        <div className="flex items-center justify-center gap-2 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#15181f]/90 border border-hairline text-white shadow-xs backdrop-blur-xs text-center">
           <Clock className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={2} />
-          <span className="text-xs sm:text-sm font-medium tracking-tight whitespace-nowrap">{t("usps.returnService")}</span>
+          <span className="text-xs sm:text-sm font-medium tracking-tight">{t("usps.returnService")}</span>
         </div>
       </section>
 

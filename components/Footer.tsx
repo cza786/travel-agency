@@ -84,19 +84,6 @@ export function Footer() {
 
           {/* Column 4: Social Icons */}
           <div className="flex items-center gap-3.5 sm:justify-end">
-            {/* Facebook */}
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="w-9 h-9 rounded-full bg-graphite/60 hover:bg-white/15 border border-hairline flex items-center justify-center text-white/80 hover:text-white transition-all hover:scale-105"
-            >
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
-              </svg>
-            </a>
-
             {/* Instagram */}
             <a
               href="https://instagram.com"
@@ -112,16 +99,16 @@ export function Footer() {
               </svg>
             </a>
 
-            {/* X / Twitter */}
+            {/* Snapchat */}
             <a
-              href="https://twitter.com"
+              href="https://snapchat.com"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="X (Twitter)"
+              aria-label="Snapchat"
               className="w-9 h-9 rounded-full bg-graphite/60 hover:bg-white/15 border border-hairline flex items-center justify-center text-white/80 hover:text-white transition-all hover:scale-105"
             >
-              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M12.004 2c-3.328 0-5.467 2.37-5.467 5.253 0 1.096.34 2.052.88 2.766.11.144.13.34.05.498-.104.208-.432.55-1.134.814-.52.196-.948.303-1.277.321-.318.017-.545.283-.497.599.088.583.565 1.157 1.42 1.439.734.242 1.22.127 1.408.064.15-.05.318-.01.428.104.228.236.713.754.713 1.488 0 .428-.21.802-.533 1.14-.537.562-1.35 1.056-2.176 1.385-.306.122-.457.447-.348.75.163.454.67 1.026 1.705 1.223.778.148 1.498-.014 2.007-.221.18-.073.385-.027.52.115.556.582 1.624 1.085 2.87 1.085 1.246 0 2.314-.503 2.87-1.085.135-.142.34-.188.52-.115.509.207 1.229.369 2.007.221 1.035-.197 1.542-.769 1.705-1.223.109-.303-.042-.628-.348-.75-.826-.329-1.639-.823-2.176-1.385-.323-.338-.533-.712-.533-1.14 0-.734.485-1.252.713-1.488.11-.114.278-.154.428-.104.188.063.674.178 1.408-.064.855-.282 1.332-.856 1.42-1.439.048-.316-.179-.582-.497-.599-.329-.018-.757-.125-1.277-.321-.702-.264-1.03-.606-1.134-.814-.08-.158-.06-.354.05-.498.54-.714.88-1.67.88-2.766C17.471 4.37 15.332 2 12.004 2z"/>
               </svg>
             </a>
 

@@ -61,7 +61,7 @@ Configured with the exact dark automotive luxury palette:
      - Vienna Airport ↔ Zell am See / Kaprun: **800 €**
      - Milan ↔ Zell am See / Kaprun: **1.200 €**
      - Interlaken ↔ Zell am See: **1.200 €**
-     - Innsbruck Airport ↔ Zell am See: **320 €**
+     - Innsbruck Airport ↔ Zell am See: **450 €**
    - Kilometer tariffs card: *Bis 50 km: 3,10 € / km · Ab 50 km: 2,80 € / km*.
    - Interactive Route & Fare Calculator with real-time distance slider, round-trip discount, and 1-click booking prefill.
 

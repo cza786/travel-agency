@@ -192,6 +192,7 @@ export default function AdminPricingPage() {
           { key: "fixed_route", label: "Main Fixed Routes" },
           { key: "airport_route", label: "Airport Routes" },
           { key: "km_rate", label: "Kilometer Tariffs" },
+          { key: "taximeter", label: "Taximeter Tariffs" },
         ].map((tab) => (
           <button
             key={tab.key}
@@ -380,6 +381,7 @@ export default function AdminPricingPage() {
                     <option value="fixed_route">Main Fixed Route</option>
                     <option value="airport_route">Airport Route</option>
                     <option value="km_rate">Kilometer Rate</option>
+                    <option value="taximeter">Taximeter Tariff</option>
                   </select>
                 </div>
               </div>

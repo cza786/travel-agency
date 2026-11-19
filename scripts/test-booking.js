@@ -15,7 +15,7 @@ async function testValidation() {
     flightNumber: "OS 1234",
     passengers: 4,
     luggage: 4,
-    vehicle: "Mercedes-Benz V-Klasse VIP",
+    vehicle: "Mercedes-Benz V-Klasse / Vito",
     notes: "2x Skiausrüstung, Kindersitz für 4-Jährigen",
     locale: "de",
   };

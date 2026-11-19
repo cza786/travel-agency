@@ -2,7 +2,7 @@ import { createClient } from "./supabase/client";
 
 export interface PricingEntry {
   id: string;
-  category: "service" | "fixed_route" | "airport_route" | "km_rate";
+  category: "service" | "fixed_route" | "airport_route" | "km_rate" | "taximeter";
   service: string;
   price: string;
   numericPrice: number;
@@ -137,8 +137,8 @@ export const DEFAULT_PRICES: PricingEntry[] = [
     id: "inn-zas",
     category: "fixed_route",
     service: "Innsbruck Flughafen → Zell am See / Kaprun",
-    price: "320 €",
-    numericPrice: 320,
+    price: "450 €",
+    numericPrice: 450,
     status: "Active",
     iconType: "plane",
   },
@@ -147,7 +147,7 @@ export const DEFAULT_PRICES: PricingEntry[] = [
   {
     id: "air-r1",
     category: "airport_route",
-    service: "Salzburg → München",
+    service: "Zell am See ↔ Salzburg",
     price: "220 €",
     numericPrice: 220,
     status: "Active",
@@ -156,27 +156,27 @@ export const DEFAULT_PRICES: PricingEntry[] = [
   {
     id: "air-r2",
     category: "airport_route",
-    service: "Salzburg → Wien",
-    price: "240 €",
-    numericPrice: 240,
+    service: "Zell am See ↔ München",
+    price: "480 €",
+    numericPrice: 480,
     status: "Active",
     iconType: "plane",
   },
   {
     id: "air-r3",
     category: "airport_route",
-    service: "Salzburg → Innsbruck",
-    price: "280 €",
-    numericPrice: 280,
+    service: "Zell am See ↔ Innsbruck",
+    price: "450 €",
+    numericPrice: 450,
     status: "Active",
     iconType: "plane",
   },
   {
     id: "air-r4",
     category: "airport_route",
-    service: "München → Salzburg",
-    price: "220 €",
-    numericPrice: 220,
+    service: "Zell am See ↔ Wien",
+    price: "800 €",
+    numericPrice: 800,
     status: "Active",
     iconType: "plane",
   },
@@ -202,6 +202,41 @@ export const DEFAULT_PRICES: PricingEntry[] = [
     status: "Active",
     iconType: "car",
   },
+
+  // 5. Taximeter Tariffs (Salzburg / Zell am See Taxi Regulation)
+  {
+    id: "taxameter-base",
+    category: "taximeter",
+    service: "Taxameter Grundgebühr / Einstieg",
+    price: "Tarif folgt",
+    numericPrice: 0,
+    unit: "Pauschal",
+    status: "Active",
+    iconType: "car",
+    description: "Amtliche Grundgebühr gemäß Salzburger Taxitarifordnung",
+  },
+  {
+    id: "taxameter-km",
+    category: "taximeter",
+    service: "Taxameter Kilometerpreis",
+    price: "Tarif folgt",
+    numericPrice: 0,
+    unit: "€ / km",
+    status: "Active",
+    iconType: "car",
+    description: "Abrechnung nach amtlich geeichtem Taxameter",
+  },
+  {
+    id: "taxameter-wait",
+    category: "taximeter",
+    service: "Taxameter Wartezeit (pro Stunde)",
+    price: "Tarif folgt",
+    numericPrice: 0,
+    unit: "€ / Std",
+    status: "Active",
+    iconType: "car",
+    description: "Wartezeit bei Zwischenstopps oder Verkehrsverzögerungen",
+  },
 ];
 
 const LOCAL_STORAGE_KEY = "fcd_live_pricing_store";
@@ -214,32 +249,65 @@ const SYNC_EVENT_NAME = "fcd_pricing_updated";
  * 3. Default preset catalog
  */
 export async function getLivePrices(): Promise<PricingEntry[]> {
-  if (typeof window !== "undefined") {
-    try {
-      const cached = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (cached) {
-        return JSON.parse(cached);
-      }
-    } catch {
-      // ignore
-    }
-  }
-
-  // Try to fetch from Supabase
+  // Try to fetch latest live prices from Supabase first
   try {
     const supabase = createClient();
     const { data, error } = await supabase.from("prices").select("*");
     if (!error && data && data.length > 0) {
-      const mapped: PricingEntry[] = data.map((d) => ({
-        id: d.id,
-        category: d.category || "service",
-        service: d.service,
-        price: d.price,
-        numericPrice: Number(d.numeric_price) || 0,
-        unit: d.unit || undefined,
-        status: d.status || "Active",
-        iconType: d.icon || "car",
-      }));
+      let needsDbSync = false;
+      const mapped: PricingEntry[] = data.map((d) => {
+        // Auto-heal legacy airport routes if they still have old Salzburg origin or outdated mock prices
+        if (d.id === "air-r1" && (d.service === "Salzburg → München" || !d.service.includes("Zell am See"))) {
+          needsDbSync = true;
+          return { id: "air-r1", category: "airport_route", service: "Zell am See ↔ Salzburg", price: "220 €", numericPrice: 220, status: d.status || "Active", iconType: "plane" };
+        }
+        if (d.id === "air-r2" && (d.service === "Salzburg → Wien" || d.numeric_price === 240 || !d.service.includes("Zell am See"))) {
+          needsDbSync = true;
+          return { id: "air-r2", category: "airport_route", service: "Zell am See ↔ München", price: "480 €", numericPrice: 480, status: d.status || "Active", iconType: "plane" };
+        }
+        if (d.id === "air-r3" && (d.service === "Salzburg → Innsbruck" || d.numeric_price === 280 || d.numeric_price === 320 || !d.service.includes("Zell am See"))) {
+          needsDbSync = true;
+          return { id: "air-r3", category: "airport_route", service: "Zell am See ↔ Innsbruck", price: "450 €", numericPrice: 450, status: d.status || "Active", iconType: "plane" };
+        }
+        if (d.id === "inn-zas" && (d.numeric_price === 320 || d.price === "320 €")) {
+          needsDbSync = true;
+          return { id: "inn-zas", category: "fixed_route", service: "Innsbruck Flughafen → Zell am See / Kaprun", price: "450 €", numericPrice: 450, status: d.status || "Active", iconType: "plane" };
+        }
+        if (d.id === "air-r4" && (d.service === "München → Salzburg" || d.numeric_price === 220 || !d.service.includes("Zell am See"))) {
+          needsDbSync = true;
+          return { id: "air-r4", category: "airport_route", service: "Zell am See ↔ Wien", price: "800 €", numericPrice: 800, status: d.status || "Active", iconType: "plane" };
+        }
+        return {
+          id: d.id,
+          category: d.category || "service",
+          service: d.service,
+          price: d.price,
+          numericPrice: Number(d.numeric_price) || 0,
+          unit: d.unit || undefined,
+          status: d.status || "Active",
+          iconType: d.icon || "car",
+        };
+      });
+
+      if (needsDbSync) {
+        try {
+          const toSync = mapped.filter((m) => ["air-r1", "air-r2", "air-r3", "air-r4", "inn-zas"].includes(m.id));
+          for (const item of toSync) {
+            await supabase.from("prices").upsert({
+              id: item.id,
+              category: item.category,
+              service: item.service,
+              price: item.price,
+              numeric_price: item.numericPrice,
+              status: item.status,
+              icon: item.iconType,
+              updated_at: new Date().toISOString(),
+            });
+          }
+        } catch {
+          // ignore
+        }
+      }
 
       // Cache locally
       if (typeof window !== "undefined") {
@@ -249,6 +317,26 @@ export async function getLivePrices(): Promise<PricingEntry[]> {
     }
   } catch {
     // ignore
+  }
+
+  // Fallback to local storage cache if offline/error
+  if (typeof window !== "undefined") {
+    try {
+      const cached = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (cached) {
+        const parsed: PricingEntry[] = JSON.parse(cached);
+        const hasLegacy = parsed.some(
+          (p) => p.id === "air-r2" && (p.price === "240 €" || p.service === "Salzburg → Wien")
+        );
+        if (hasLegacy) {
+          localStorage.removeItem(LOCAL_STORAGE_KEY);
+          return DEFAULT_PRICES;
+        }
+        return parsed;
+      }
+    } catch {
+      // ignore
+    }
   }
 
   return DEFAULT_PRICES;

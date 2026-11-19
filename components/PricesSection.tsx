@@ -10,6 +10,11 @@ import {
   Info,
   Route,
   MapPin,
+  Gauge,
+  Clock,
+  Coins,
+  ShieldCheck,
+  ArrowRight,
 } from "lucide-react";
 import { useBookingModal } from "./BookingModal";
 import { useLivePricing } from "@/lib/useLivePricing";
@@ -98,8 +103,8 @@ export function PricesSection() {
       id: "inn-zas",
       from: "Innsbruck Flughafen",
       to: "Zell am See / Kaprun",
-      price: "320 €",
-      numericPrice: 320,
+      price: "450 €",
+      numericPrice: 450,
       iconType: "plane",
       distanceKm: 145,
     },
@@ -337,6 +342,104 @@ export function PricesSection() {
             <span className="text-[11px] sm:text-xs font-bold text-[#DFBA73] group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform flex items-center gap-1.5">
               {t("calculateTrip")} <span className="text-sm">➔</span>
             </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Taxameter-Tarife (Taximeter Tariffs) */}
+      <section className="space-y-3.5 pt-1">
+        <div className="flex flex-wrap items-center justify-between gap-2.5">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-graphite border border-hairline flex items-center justify-center shrink-0">
+              <Gauge className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.75} />
+            </div>
+            <div>
+              <h3 className="text-base sm:text-lg md:text-xl font-bold text-white tracking-tight">
+                {t("taximeterSectionTitle")}
+              </h3>
+            </div>
+          </div>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#DFBA73]/10 border border-[#DFBA73]/40 text-[#DFBA73] text-[10.5px] sm:text-xs font-semibold uppercase tracking-wider shadow-xs">
+            <Clock className="w-3.5 h-3.5" />
+            {t("taximeterComingSoonBadge")}
+          </span>
+        </div>
+
+        <div className="rounded-2xl bg-graphite border border-hairline overflow-hidden shadow-sm">
+          {/* Top 3 Metric Columns */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-hairline/60">
+            {/* 1. Base Fare */}
+            <div className="p-4 sm:p-5 flex items-center gap-3.5 sm:gap-4">
+              <div className="w-10 h-10 rounded-xl bg-obsidian/80 border border-[#DFBA73]/30 flex items-center justify-center shrink-0 shadow-sm">
+                <Coins className="w-5 h-5 text-[#DFBA73]" strokeWidth={1.75} />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[10px] sm:text-[11px] text-[#DFBA73] font-bold uppercase tracking-wider mb-0.5">
+                  {t("taximeterBaseFare")}
+                </div>
+                <div className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                  {getPrice("taxameter-base", t("taximeterComingSoonBadge"))}
+                </div>
+                <div className="text-[10px] sm:text-[11px] text-silver-muted mt-0.5 font-normal">
+                  {t("taximeterBaseFareDesc")}
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Kilometer Rate */}
+            <div className="p-4 sm:p-5 flex items-center gap-3.5 sm:gap-4">
+              <div className="w-10 h-10 rounded-xl bg-obsidian/80 border border-white/15 flex items-center justify-center shrink-0 shadow-sm">
+                <Route className="w-5 h-5 text-platinum-light" strokeWidth={1.75} />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[10px] sm:text-[11px] text-platinum-light font-bold uppercase tracking-wider mb-0.5">
+                  {t("taximeterKmRate")}
+                </div>
+                <div className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                  {getPrice("taxameter-km", t("taximeterComingSoonBadge"))}
+                </div>
+                <div className="text-[10px] sm:text-[11px] text-silver-muted mt-0.5 font-normal">
+                  {t("taximeterKmRateDesc")}
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Waiting Time */}
+            <div className="p-4 sm:p-5 flex items-center gap-3.5 sm:gap-4">
+              <div className="w-10 h-10 rounded-xl bg-obsidian/80 border border-white/15 flex items-center justify-center shrink-0 shadow-sm">
+                <Clock className="w-5 h-5 text-platinum-light" strokeWidth={1.75} />
+              </div>
+              <div className="min-w-0">
+                <div className="text-[10px] sm:text-[11px] text-platinum-light font-bold uppercase tracking-wider mb-0.5">
+                  {t("taximeterWaitingTime")}
+                </div>
+                <div className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                  {getPrice("taxameter-wait", t("taximeterComingSoonBadge"))}
+                </div>
+                <div className="text-[10px] sm:text-[11px] text-silver-muted mt-0.5 font-normal">
+                  {t("taximeterWaitingTimeDesc")}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Notice & Fast Booking Button */}
+          <div className="px-4 sm:px-6 py-3.5 border-t border-hairline/60 bg-graphite-elevated/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 text-silver-muted">
+              <ShieldCheck className="w-4 h-4 text-[#DFBA73] shrink-0" strokeWidth={1.8} />
+              <span className="text-[11px] sm:text-xs leading-relaxed">
+                {t("taximeterNotice")} {t("taximeterComingSoonDesc")}
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => openBooking({ pickup: "Zell am See", dropoff: "Taxifahrt nach Taxameter" })}
+              className="w-full sm:w-auto px-4 py-2 rounded-xl bg-[#DFBA73]/15 hover:bg-[#DFBA73]/25 border border-[#DFBA73]/40 text-[#DFBA73] hover:text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
+            >
+              <span>{t("taximeterCta")}</span>
+              <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
+            </button>
           </div>
         </div>
       </section>

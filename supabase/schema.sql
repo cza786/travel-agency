@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS public.bookings (
     flight_number TEXT,
     passengers INTEGER DEFAULT 2,
     luggage INTEGER DEFAULT 2,
-    vehicle TEXT DEFAULT 'Mercedes-Benz V-Klasse VIP',
+    vehicle TEXT DEFAULT 'Mercedes-Benz V-Klasse / Vito',
     notes TEXT,
     locale TEXT DEFAULT 'de',
     status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'completed', 'cancelled')),
@@ -74,13 +74,16 @@ INSERT INTO public.prices (id, category, service, price, numeric_price, status, 
 ('vie-zas', 'fixed_route', 'Wien Flughafen → Zell am See / Kaprun', '800 €', 800, 'Active', 'plane'),
 ('mil-zas', 'fixed_route', 'Mailand → Zell am See / Kaprun', '1.200 €', 1200, 'Active', 'car'),
 ('inl-zas', 'fixed_route', 'Interlaken → Zell am See', '1.200 €', 1200, 'Active', 'mountain'),
-('inn-zas', 'fixed_route', 'Innsbruck Flughafen → Zell am See / Kaprun', '320 €', 320, 'Active', 'plane'),
-('air-r1', 'airport_route', 'Salzburg → München', '220 €', 220, 'Active', 'plane'),
-('air-r2', 'airport_route', 'Salzburg → Wien', '240 €', 240, 'Active', 'plane'),
-('air-r3', 'airport_route', 'Salzburg → Innsbruck', '280 €', 280, 'Active', 'plane'),
-('air-r4', 'airport_route', 'München → Salzburg', '220 €', 220, 'Active', 'plane'),
+('inn-zas', 'fixed_route', 'Innsbruck Flughafen → Zell am See / Kaprun', '450 €', 450, 'Active', 'plane'),
+('air-r1', 'airport_route', 'Zell am See ↔ Salzburg', '220 €', 220, 'Active', 'plane'),
+('air-r2', 'airport_route', 'Zell am See ↔ München', '480 €', 480, 'Active', 'plane'),
+('air-r3', 'airport_route', 'Zell am See ↔ Innsbruck', '450 €', 450, 'Active', 'plane'),
+('air-r4', 'airport_route', 'Zell am See ↔ Wien', '800 €', 800, 'Active', 'plane'),
 ('km-short', 'km_rate', 'Kurzstrecken (< 50 km)', '3.10 € / km', 3.10, 'Active', 'car'),
-('km-long', 'km_rate', 'Langstrecken (> 50 km)', '2.80 € / km', 2.80, 'Active', 'car')
+('km-long', 'km_rate', 'Langstrecken (> 50 km)', '2.80 € / km', 2.80, 'Active', 'car'),
+('taxameter-base', 'taximeter', 'Taxameter Grundgebühr / Einstieg', 'Tarif folgt', 0, 'Active', 'car'),
+('taxameter-km', 'taximeter', 'Taxameter Kilometerpreis', 'Tarif folgt', 0, 'Active', 'car'),
+('taxameter-wait', 'taximeter', 'Taxameter Wartezeit (pro Stunde)', 'Tarif folgt', 0, 'Active', 'car')
 ON CONFLICT (id) DO NOTHING;
 
 -- 5. Enable Row Level Security (RLS)
