@@ -137,8 +137,8 @@ export const DEFAULT_PRICES: PricingEntry[] = [
     id: "inn-zas",
     category: "fixed_route",
     service: "Innsbruck Flughafen → Zell am See / Kaprun",
-    price: "450 €",
-    numericPrice: 450,
+    price: "400 €",
+    numericPrice: 400,
     status: "Active",
     iconType: "plane",
   },
@@ -269,9 +269,9 @@ export async function getLivePrices(): Promise<PricingEntry[]> {
           needsDbSync = true;
           return { id: "air-r3", category: "airport_route", service: "Zell am See ↔ Innsbruck", price: "450 €", numericPrice: 450, status: d.status || "Active", iconType: "plane" };
         }
-        if (d.id === "inn-zas" && (d.numeric_price === 320 || d.price === "320 €")) {
+        if (d.id === "inn-zas" && (d.numeric_price === 320 || d.price === "320 €" || d.numeric_price === 450 || d.price === "450 €")) {
           needsDbSync = true;
-          return { id: "inn-zas", category: "fixed_route", service: "Innsbruck Flughafen → Zell am See / Kaprun", price: "450 €", numericPrice: 450, status: d.status || "Active", iconType: "plane" };
+          return { id: "inn-zas", category: "fixed_route", service: "Innsbruck Flughafen → Zell am See / Kaprun", price: "400 €", numericPrice: 400, status: d.status || "Active", iconType: "plane" };
         }
         if (d.id === "air-r4" && (d.service === "München → Salzburg" || d.numeric_price === 220 || !d.service.includes("Zell am See"))) {
           needsDbSync = true;
@@ -326,7 +326,9 @@ export async function getLivePrices(): Promise<PricingEntry[]> {
       if (cached) {
         const parsed: PricingEntry[] = JSON.parse(cached);
         const hasLegacy = parsed.some(
-          (p) => p.id === "air-r2" && (p.price === "240 €" || p.service === "Salzburg → Wien")
+          (p) =>
+            (p.id === "air-r2" && (p.price === "240 €" || p.service === "Salzburg → Wien")) ||
+            (p.id === "inn-zas" && (p.price === "320 €" || p.price === "450 €"))
         );
         if (hasLegacy) {
           localStorage.removeItem(LOCAL_STORAGE_KEY);

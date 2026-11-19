@@ -415,42 +415,42 @@ export function AirportTransfersView() {
       </section>
 
       {/* 5. BELIEBTE ROUTEN (POPULAR ROUTES SECTION) */}
-      <section className="w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-          {/* Section Header on Left */}
-          <div className="lg:col-span-3 space-y-1.5 text-left rtl:text-right">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-serif sm:font-sans">
-              {t("routes.title")}
-            </h2>
-            <p className="text-xs sm:text-sm text-silver-muted font-normal">
-              {t("routes.subtitle")}
-            </p>
-          </div>
+      <section className="w-full space-y-6 sm:space-y-8">
+        {/* Section Header Centered on Top */}
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight font-serif sm:font-sans">
+            {t("routes.title")}
+          </h2>
+          <p className="text-xs sm:text-sm md:text-base text-silver-muted font-normal">
+            {t("routes.subtitle")}
+          </p>
+        </div>
 
-          {/* Route Cards on Right - Live updated, edited or deleted from /admin/pricing */}
-          <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5 sm:gap-4">
-            {(liveAirportRoutes.length > 0 ? liveAirportRoutes : fallbackRoutes).map((route) => {
-              const routeImage = getRouteImage(route.service, route.id);
-              const routeTitle = getRouteTitle(route.id, route.service);
-              const { pickup, dropoff } = getRoutePickupDropoff(route.service);
+        {/* Route Cards in Full-Width Responsive Grid with Proper Spacing */}
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+          {(liveAirportRoutes.length > 0 ? liveAirportRoutes : fallbackRoutes).map((route) => {
+            const routeImage = getRouteImage(route.service, route.id);
+            const routeTitle = getRouteTitle(route.id, route.service);
+            const { pickup, dropoff } = getRoutePickupDropoff(route.service);
 
-              return (
-                <div
-                  key={route.id}
-                  onClick={() => openBooking({ pickup, dropoff })}
-                  className="group cursor-pointer rounded-2xl bg-white/95 hover:bg-white text-obsidian shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-white/20 flex flex-col justify-between"
-                >
-                  <div className="p-3.5 sm:p-4">
-                    <h3 className="text-xs sm:text-sm font-bold text-obsidian tracking-tight truncate">
-                      {routeTitle}
-                    </h3>
-                    <div className="mt-2 flex items-center gap-2">
+            return (
+              <div
+                key={route.id}
+                onClick={() => openBooking({ pickup, dropoff })}
+                className="group cursor-pointer rounded-2xl bg-white/95 hover:bg-white text-obsidian shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-white/20 flex flex-col justify-between"
+              >
+                <div className="p-4 sm:p-5">
+                  <h3 className="text-xs sm:text-sm md:text-base font-bold text-obsidian tracking-tight truncate">
+                    {routeTitle}
+                  </h3>
+                  <div className="mt-2.5 flex items-center justify-between gap-2">
+                    <div className="flex items-baseline gap-1.5">
                       {route.price ? (
                         <>
                           <span className="text-xs font-semibold text-slate-500">
                             {t("routes.fromPrice")}
                           </span>
-                          <span className="text-sm font-extrabold text-obsidian">
+                          <span className="text-sm sm:text-base font-extrabold text-obsidian">
                             {route.price}
                           </span>
                         </>
@@ -459,27 +459,27 @@ export function AirportTransfersView() {
                           {tCommon("onDemand")}
                         </span>
                       )}
-                      <div className="w-6 h-6 rounded-full bg-[#ECC880] flex items-center justify-center shrink-0 ml-auto group-hover:scale-110 transition-transform">
-                        <ArrowRight className="w-3.5 h-3.5 text-obsidian rtl:rotate-180" strokeWidth={2.5} />
-                      </div>
+                    </div>
+                    <div className="w-7 h-7 rounded-full bg-[#ECC880] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <ArrowRight className="w-3.5 h-3.5 text-obsidian rtl:rotate-180" strokeWidth={2.5} />
                     </div>
                   </div>
-
-                  {/* Clean city photography (no baked-in prices or text) */}
-                  <div className="relative w-full h-24 sm:h-28 bg-slate-900 overflow-hidden">
-                    <Image
-                      src={routeImage}
-                      alt={routeTitle}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 25vw"
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
-                  </div>
                 </div>
-              );
-            })}
-          </div>
+
+                {/* Clean city photography (no baked-in prices or text) */}
+                <div className="relative w-full h-32 sm:h-36 md:h-40 bg-slate-900 overflow-hidden">
+                  <Image
+                    src={routeImage}
+                    alt={routeTitle}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
