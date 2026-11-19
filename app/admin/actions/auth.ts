@@ -1,15 +1,16 @@
 "use server";
 
 import { cookies } from "next/headers";
+import crypto from "crypto";
 import { createClient } from "@/lib/supabase/server";
+import {
+  AdminUser,
+  ADMIN_COOKIE_NAME,
+  signSession,
+  verifySessionToken,
+} from "@/lib/session";
 
-export interface AdminUser {
-  email: string;
-  name: string;
-  role: string;
-}
-
-const COOKIE_NAME = "fcd_admin_session";
+export type { AdminUser };
 
 export async function loginAdminAction(formData: FormData): Promise<{ success: boolean; error?: string }> {
   const email = formData.get("email")?.toString().trim().toLowerCase();
@@ -28,59 +29,80 @@ export async function loginAdminAction(formData: FormData): Promise<{ success: b
     });
 
     if (data?.user && !error) {
-      const cookieStore = await cookies();
-      cookieStore.set(COOKIE_NAME, JSON.stringify({
-        email: data.user.email,
+      const sessionUser: AdminUser = {
+        email: data.user.email || email,
         name: data.user.user_metadata?.full_name || "Admin",
         role: "admin",
-      }), {
+        exp: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+      };
+
+      const token = signSession(sessionUser);
+      const cookieStore = await cookies();
+      cookieStore.set(ADMIN_COOKIE_NAME, token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 60 * 60 * 24 * 7,
       });
+
       return { success: true };
     }
   } catch (sbError) {
-    console.warn("Supabase auth check notice:", sbError);
+    console.warn("Supabase auth notice:", sbError);
   }
 
-  // 2. Built-in Admin Access fallback (ensures immediate access while configuring users in Supabase)
-  // Accepts: admin@firstclassdrive.at or demo admin credentials
-  if (
-    (email === "admin@firstclassdrive.at" && password.length >= 4) ||
-    (email.includes("admin") && password.length >= 4) ||
-    password === "admin123" ||
-    password === "firstclass2025"
-  ) {
-    const cookieStore = await cookies();
-    cookieStore.set(COOKIE_NAME, JSON.stringify({
-      email: email,
-      name: "Admin",
-      role: "admin",
-    }), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-    });
-    return { success: true };
+  // 2. Controlled Environment Variable Fallback (configurable via .env.local / Vercel secrets)
+  const envAdminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const envAdminPassword = process.env.ADMIN_PASSWORD;
+
+  if (envAdminEmail && envAdminPassword) {
+    const isEmailMatch = email === envAdminEmail;
+    let isPasswordMatch = false;
+    try {
+      const passBuf = Buffer.from(password);
+      const envBuf = Buffer.from(envAdminPassword);
+      if (passBuf.length === envBuf.length && crypto.timingSafeEqual(passBuf, envBuf)) {
+        isPasswordMatch = true;
+      }
+    } catch {
+      isPasswordMatch = false;
+    }
+
+    if (isEmailMatch && isPasswordMatch) {
+      const sessionUser: AdminUser = {
+        email,
+        name: "Admin",
+        role: "admin",
+        exp: Date.now() + 7 * 24 * 60 * 60 * 1000,
+      };
+
+      const token = signSession(sessionUser);
+      const cookieStore = await cookies();
+      cookieStore.set(ADMIN_COOKIE_NAME, token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 7,
+      });
+
+      return { success: true };
+    }
   }
 
   return {
     success: false,
-    error: "Invalid admin credentials. You can use admin@firstclassdrive.at / admin123",
+    error: "Invalid email or password.",
   };
 }
 
 export async function getAdminSession(): Promise<AdminUser | null> {
   try {
     const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get(COOKIE_NAME);
+    const sessionCookie = cookieStore.get(ADMIN_COOKIE_NAME);
     if (!sessionCookie?.value) return null;
-    return JSON.parse(sessionCookie.value) as AdminUser;
+    return verifySessionToken(sessionCookie.value);
   } catch {
     return null;
   }
@@ -88,7 +110,7 @@ export async function getAdminSession(): Promise<AdminUser | null> {
 
 export async function logoutAdminAction(): Promise<void> {
   const cookieStore = await cookies();
-  cookieStore.delete(COOKIE_NAME);
+  cookieStore.delete(ADMIN_COOKIE_NAME);
   try {
     const supabase = await createClient();
     await supabase.auth.signOut();

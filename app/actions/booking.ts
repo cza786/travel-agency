@@ -3,6 +3,7 @@
 import { Resend } from "resend";
 import { bookingFormSchema, BookingResponse } from "@/lib/bookingSchema";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { escapeHtml } from "@/lib/sanitize";
 
 export async function submitBookingInquiry(formData: unknown): Promise<BookingResponse> {
   const result = bookingFormSchema.safeParse(formData);
@@ -73,6 +74,17 @@ export async function submitBookingInquiry(formData: unknown): Promise<BookingRe
     try {
       const resend = new Resend(resendApiKey);
 
+      const safePickup = escapeHtml(data.pickup);
+      const safeDropoff = escapeHtml(data.dropoff);
+      const safeFullName = escapeHtml(data.fullName);
+      const safePhone = escapeHtml(data.phone);
+      const safeEmail = escapeHtml(data.email);
+      const safeVehicle = escapeHtml(data.vehicle);
+      const safeDate = escapeHtml(data.date);
+      const safeTime = escapeHtml(data.time);
+      const safeFlight = data.flightNumber ? escapeHtml(data.flightNumber) : null;
+      const safeNotes = data.notes ? escapeHtml(data.notes) : null;
+
       const htmlContent = `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background-color: #080A0C; color: #E4E7EC; border: 1px solid #2E343E; border-radius: 12px; overflow: hidden; padding: 24px;">
           <div style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #2E343E;">
@@ -85,24 +97,24 @@ export async function submitBookingInquiry(formData: unknown): Promise<BookingRe
             <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF; width: 140px;">Abholadresse:</td>
-                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${data.pickup}</td>
+                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${safePickup}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">Zieladresse:</td>
-                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${data.dropoff}</td>
+                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${safeDropoff}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">Datum & Uhrzeit:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.date} um ${data.time} Uhr</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${safeDate} um ${safeTime} Uhr</td>
               </tr>
-              ${data.flightNumber ? `<tr><td style="padding: 8px 0; color: #9CA3AF;">Flugnummer:</td><td style="padding: 8px 0; color: #FFFFFF;">${data.flightNumber}</td></tr>` : ""}
+              ${safeFlight ? `<tr><td style="padding: 8px 0; color: #9CA3AF;">Flugnummer:</td><td style="padding: 8px 0; color: #FFFFFF;">${safeFlight}</td></tr>` : ""}
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">Fahrgäste & Gepäck:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.passengers} Personen · ${data.luggage} Gepäckstücke</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${Number(data.passengers) || 1} Personen · ${Number(data.luggage) || 0} Gepäckstücke</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">Gewünschtes Fahrzeug:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.vehicle}</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${safeVehicle}</td>
               </tr>
             </table>
 
@@ -110,22 +122,22 @@ export async function submitBookingInquiry(formData: unknown): Promise<BookingRe
             <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF; width: 140px;">Name:</td>
-                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${data.fullName}</td>
+                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${safeFullName}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">Telefon:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.phone}</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${safePhone}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">E-Mail:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.email}</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${safeEmail}</td>
               </tr>
             </table>
 
-            ${data.notes ? `
+            ${safeNotes ? `
               <h2 style="color: #FFFFFF; font-size: 16px; margin-top: 24px;">Anmerkungen / Sondergepäck</h2>
               <div style="background-color: #14171C; border: 1px solid #2E343E; border-radius: 8px; padding: 12px; font-size: 14px; color: #B8BFC9;">
-                ${data.notes}
+                ${safeNotes}
               </div>
             ` : ""}
           </div>

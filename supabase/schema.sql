@@ -92,18 +92,46 @@ ALTER TABLE public.rentals ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.prices ENABLE ROW LEVEL SECURITY;
 
--- Allow public form submission (INSERT)
+-- Clean up any prior insecure policies
+DROP POLICY IF EXISTS "Allow public insert to bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Allow public read bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Allow public update bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Allow public insert to rentals" ON public.rentals;
+DROP POLICY IF EXISTS "Allow public read rentals" ON public.rentals;
+DROP POLICY IF EXISTS "Allow public update rentals" ON public.rentals;
+DROP POLICY IF EXISTS "Allow public insert to contact_messages" ON public.contact_messages;
+DROP POLICY IF EXISTS "Allow public read contact_messages" ON public.contact_messages;
+DROP POLICY IF EXISTS "Allow public read prices" ON public.prices;
+DROP POLICY IF EXISTS "Allow public all prices" ON public.prices;
+
+-- Secure Policies for bookings:
+-- 1) Anonymous/public can only create inquiries
 CREATE POLICY "Allow public insert to bookings" ON public.bookings FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public read bookings" ON public.bookings FOR SELECT USING (true);
-CREATE POLICY "Allow public update bookings" ON public.bookings FOR UPDATE USING (true);
+-- 2) Only authenticated admin or service_role can view or modify customer bookings
+CREATE POLICY "Allow authenticated read bookings" ON public.bookings FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Allow authenticated update bookings" ON public.bookings FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete bookings" ON public.bookings FOR DELETE TO authenticated USING (true);
 
+-- Secure Policies for rentals:
+-- 1) Anonymous/public can only create rental requests
 CREATE POLICY "Allow public insert to rentals" ON public.rentals FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public read rentals" ON public.rentals FOR SELECT USING (true);
-CREATE POLICY "Allow public update rentals" ON public.rentals FOR UPDATE USING (true);
+-- 2) Only authenticated admin or service_role can view or modify rental records
+CREATE POLICY "Allow authenticated read rentals" ON public.rentals FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Allow authenticated update rentals" ON public.rentals FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete rentals" ON public.rentals FOR DELETE TO authenticated USING (true);
 
+-- Secure Policies for contact_messages:
+-- 1) Anonymous/public can submit contact messages
 CREATE POLICY "Allow public insert to contact_messages" ON public.contact_messages FOR INSERT WITH CHECK (true);
-CREATE POLICY "Allow public read contact_messages" ON public.contact_messages FOR SELECT USING (true);
+-- 2) Only authenticated admin or service_role can view or manage messages
+CREATE POLICY "Allow authenticated read contact_messages" ON public.contact_messages FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Allow authenticated update contact_messages" ON public.contact_messages FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete contact_messages" ON public.contact_messages FOR DELETE TO authenticated USING (true);
 
--- Allow public read & management for prices
+-- Secure Policies for prices:
+-- 1) Public users can only read active prices
 CREATE POLICY "Allow public read prices" ON public.prices FOR SELECT USING (true);
-CREATE POLICY "Allow public all prices" ON public.prices FOR ALL USING (true);
+-- 2) Only authenticated admin or service_role can create, update or delete prices
+CREATE POLICY "Allow authenticated insert prices" ON public.prices FOR INSERT TO authenticated WITH CHECK (true);
+CREATE POLICY "Allow authenticated update prices" ON public.prices FOR UPDATE TO authenticated USING (true);
+CREATE POLICY "Allow authenticated delete prices" ON public.prices FOR DELETE TO authenticated USING (true);

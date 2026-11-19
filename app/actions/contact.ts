@@ -2,6 +2,7 @@
 
 import { Resend } from "resend";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { escapeHtml } from "@/lib/sanitize";
 
 export interface ContactFormState {
   success: boolean;
@@ -57,20 +58,25 @@ export async function submitContactMessage(formData: FormData): Promise<ContactF
   if (resendApiKey) {
     try {
       const resend = new Resend(resendApiKey);
+      const safeName = escapeHtml(name);
+      const safeEmail = escapeHtml(email);
+      const safeLocale = escapeHtml(locale);
+      const safeMessage = escapeHtml(message);
+
       await resend.emails.send({
         from: "First Class Drive <onboarding@resend.dev>",
         to: "info@firstclassdrive.at",
         replyTo: email,
-        subject: `Neue Kontaktanfrage von ${name}`,
+        subject: `Neue Kontaktanfrage von ${safeName}`,
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #080A0C; color: #E4E7EC; padding: 24px; border-radius: 12px; border: 1px solid #2E343E;">
             <h2 style="color: #DFBA73; margin-top: 0;">Neue Kontaktanfrage</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>E-Mail:</strong> ${email}</p>
-            <p><strong>Sprache:</strong> ${locale}</p>
+            <p><strong>Name:</strong> ${safeName}</p>
+            <p><strong>E-Mail:</strong> ${safeEmail}</p>
+            <p><strong>Sprache:</strong> ${safeLocale}</p>
             <hr style="border: 0; border-top: 1px solid #2E343E; margin: 20px 0;" />
             <p><strong>Nachricht:</strong></p>
-            <div style="background: #101318; padding: 16px; border-radius: 8px; border: 1px solid #2E343E; white-space: pre-wrap;">${message}</div>
+            <div style="background: #101318; padding: 16px; border-radius: 8px; border: 1px solid #2E343E; white-space: pre-wrap;">${safeMessage}</div>
           </div>
         `,
       });

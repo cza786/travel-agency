@@ -3,6 +3,7 @@
 import { Resend } from "resend";
 import { rentalFormSchema, RentalResponse } from "@/lib/rentalSchema";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { escapeHtml } from "@/lib/sanitize";
 
 export async function submitRentalInquiry(formData: unknown): Promise<RentalResponse> {
   const result = rentalFormSchema.safeParse(formData);
@@ -65,6 +66,14 @@ export async function submitRentalInquiry(formData: unknown): Promise<RentalResp
     try {
       const resend = new Resend(resendApiKey);
 
+      const safePickup = escapeHtml(data.pickup);
+      const safeStartDate = escapeHtml(data.startDate);
+      const safeEndDate = escapeHtml(data.endDate);
+      const safeNotes = data.notes ? escapeHtml(data.notes) : null;
+      const safeName = escapeHtml(data.name);
+      const safeEmail = escapeHtml(data.email);
+      const safePhone = escapeHtml(data.phone);
+
       const htmlContent = `
         <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background-color: #080A0C; color: #E4E7EC; border: 1px solid #2E343E; border-radius: 12px; overflow: hidden; padding: 24px;">
           <div style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #2E343E;">
@@ -78,20 +87,20 @@ export async function submitRentalInquiry(formData: unknown): Promise<RentalResp
             <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF; width: 160px;">Abholort / Zustellung:</td>
-                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${data.pickup}</td>
+                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${safePickup}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">Mietbeginn:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.startDate}</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${safeStartDate}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">Mietende:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.endDate}</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${safeEndDate}</td>
               </tr>
-              ${data.notes ? `
+              ${safeNotes ? `
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF; vertical-align: top;">Fahrzeug / Notizen:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.notes}</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${safeNotes}</td>
               </tr>
               ` : ""}
             </table>
@@ -100,15 +109,15 @@ export async function submitRentalInquiry(formData: unknown): Promise<RentalResp
             <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF; width: 160px;">Name:</td>
-                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${data.name}</td>
+                <td style="padding: 8px 0; color: #FFFFFF; font-weight: 600;">${safeName}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">E-Mail:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.email}</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${safeEmail}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #9CA3AF;">Telefonnummer:</td>
-                <td style="padding: 8px 0; color: #FFFFFF;">${data.phone}</td>
+                <td style="padding: 8px 0; color: #FFFFFF;">${safePhone}</td>
               </tr>
             </table>
           </div>
