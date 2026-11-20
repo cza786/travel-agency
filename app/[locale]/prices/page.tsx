@@ -13,10 +13,10 @@ export default async function PricesPage({
   const t = await getTranslations("prices");
 
   return (
-    <div className="w-full max-w-xl sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-6 sm:space-y-8 pb-12 sm:pb-20">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-8 sm:space-y-12 pb-16 sm:pb-24">
       {/* Header */}
       <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-hairline bg-graphite p-6 sm:p-8 md:p-10 shadow-xl">
-        <div className="relative z-10 max-w-lg">
+        <div className="relative z-10 max-w-2xl">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-2">
             {t("title")}
           </h1>

@@ -280,7 +280,7 @@ export function ServicesGrid() {
                   className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
                 >
                   <Plane className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
-                  <span>Flughafen Hub</span>
+                  <span>{t("airportHub")}</span>
                   <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
                 </Link>
               )}
@@ -291,7 +291,7 @@ export function ServicesGrid() {
                   className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
                 >
                   <Mountain className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
-                  <span>Panoramatouren Hub</span>
+                  <span>{t("excursionsHub")}</span>
                   <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
                 </Link>
               )}
@@ -302,7 +302,7 @@ export function ServicesGrid() {
                   className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
                 >
                   <Bike className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
-                  <span>Biketransfer Hub</span>
+                  <span>{t("bikeHub")}</span>
                   <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
                 </Link>
               )}
@@ -313,7 +313,7 @@ export function ServicesGrid() {
                   className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
                 >
                   <Car className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
-                  <span>VIP Chauffeur Hub</span>
+                  <span>{t("vipHub")}</span>
                   <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
                 </Link>
               )}
@@ -324,7 +324,7 @@ export function ServicesGrid() {
                   className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-graphite border border-hairline hover:border-[#DFBA73] text-platinum-light font-bold text-xs uppercase tracking-wider transition-all"
                 >
                   <Car className="w-4 h-4 text-[#DFBA73]" strokeWidth={1.8} />
-                  <span>Mietwagen Hub</span>
+                  <span>{t("rentalHub")}</span>
                   <ChevronRight className="w-4 h-4 text-[#DFBA73] rtl:rotate-180" />
                 </Link>
               )}
